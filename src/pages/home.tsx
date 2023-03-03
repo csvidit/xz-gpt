@@ -10,6 +10,7 @@ import Button from "@/components/Button";
 import Link from "next/link";
 import { HiLogin } from "react-icons/hi";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { useRouter } from 'next/router'
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,11 +19,6 @@ export default function Home() {
 
   const { user, error, isLoading } = useUser();
   const router = useRouter();
-  if(user)
-  {
-    router.push('/home');
-  }
-
   return (
     <>
       <Head>
@@ -35,12 +31,12 @@ export default function Home() {
         <Header/>
         <MainContent>
           <h1 className="text-4xl lg:text-6xl">Xzayvian GPT</h1>
-          <p className="text-xl lg:text-2xl">Based on OpenAI GPT-3.5-Turbo LLM</p>
-          <Link href="/api/auth/login" className="flex flex-row space-x-2 items-center text-xl lg:text-2xl mt-10 pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full bg-purple-900 bg-opacity-50 text-purple-200 hover:bg-slate-900">
+          <p className="text-xl lg:text-2xl">Welcome, {user?.nickname}</p>
+          <Link href="/api/auth/logout" className="flex flex-row space-x-2 items-center text-xl lg:text-2xl mt-10 pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full bg-purple-900 bg-opacity-50 text-purple-200 hover:bg-slate-900">
             <span className="text-purple-500">
               <HiLogin />
             </span>
-            <p>jump in</p>
+            <p>logout</p>
           </Link>
         </MainContent>
         <Footer/>
@@ -48,3 +44,5 @@ export default function Home() {
     </>
   );
 }
+
+export const getServerSideProps = withPageAuthRequired();
