@@ -11,6 +11,7 @@ import Link from "next/link";
 import { HiLogin } from "react-icons/hi";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from 'next/router'
+import Loading from "@/components/Loading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,6 +19,10 @@ export default function Home() {
 
   const { user, error, isLoading } = useUser();
   const router = useRouter();
+  if(isLoading)
+  {
+    return(<Loading/>);
+  }
   if(user)
   {
     router.push('/home');
@@ -32,7 +37,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MainContainer>
-        <Header/>
+        <Header isAuthenticated={false}/>
         <MainContent>
           <h1 className="text-4xl lg:text-6xl">Xzayvian GPT</h1>
           <p className="text-xl lg:text-2xl">Based on OpenAI GPT-3.5-Turbo LLM</p>
