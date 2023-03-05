@@ -3,21 +3,19 @@ import Link from "next/link";
 import { SetStateAction, useState } from "react";
 import { HiArrowRight } from "react-icons/hi2";
 import { db } from "@/firebase.config";
-import { arrayUnion, doc, updateDoc } from "@firebase/firestore";
+import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "@firebase/firestore";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 
 const Chat = (props: { user: UserProfile | undefined }) => {
   const [response, setResponse] = useState("Give a prompt to get a response.");
   const [prompt, setPrompt] = useState("");
-  function handlePromptChange(event: {
-    target: { value: SetStateAction<string> };
-  }) {
+  function handlePromptChange(event: { target: { value: SetStateAction<string>; }; }) {
     setPrompt(event.target.value);
   }
 
   const generate = async () => {
     console.log(prompt);
-    if (prompt == null) {
+    if (prompt == null || prompt == "" || prompt == " ") {
       setResponse("GIVE A PROMPT TO GET A RESPONSE!");
       return;
     } else {
@@ -29,9 +27,22 @@ const Chat = (props: { user: UserProfile | undefined }) => {
         const res = completion.data;
         const userRef = doc(db, "users", props.user!.sub!.toString());
         const newEntry = { request: prompt.toString(), response: res };
-        const userHistoryUpdate = await updateDoc(userRef, {
-          history: arrayUnion(newEntry),
-        });
+        const docSnap = await getDoc(userRef);
+        if(docSnap.exists())
+        {
+          const userHistoryUpdate = await updateDoc(userRef, {
+            history: arrayUnion(newEntry),
+          });
+        }
+        else
+        {
+          const docData = {history: []};
+          const setNewDoc = await setDoc(userRef, docData);
+          const userHistoryUpdate = await updateDoc(userRef, {
+            history: arrayUnion(newEntry),
+          });
+        }
+        
       }
       setResponse(completion!.data!.choices[0]!.message!.content);
     }
@@ -42,7 +53,7 @@ const Chat = (props: { user: UserProfile | undefined }) => {
       <textarea
         className="prompt textarea font-sans p-2 lg:p-4 rounded-xl w-full bg-slate-100 bg-opacity-10 focus:border-2 focus:border-blue-500 placeholder-blue-500"
         placeholder="Write your prompt here..."
-        onInput={handlePromptChange}
+        onChange={handlePromptChange}
         value={prompt}
       ></textarea>
       <button

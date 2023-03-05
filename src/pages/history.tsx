@@ -59,6 +59,7 @@ export default function Home() {
             {history?.map(
               (x: {
                 response: {
+                  id: string | null | undefined;
                   choices: {
                     message: {
                       id: string | null | undefined;
@@ -67,10 +68,11 @@ export default function Home() {
                   }[];
                 };
                 request: string;
-              }) => {
+              }, index) => {
                 return (
                   <HistoryItem
-                    key={x?.response?.choices[0]?.message?.id}
+                    key={index}
+                    id={x?.response?.id}
                     label={x?.request}
                   >
                     {x?.response?.choices[0]?.message?.content}
