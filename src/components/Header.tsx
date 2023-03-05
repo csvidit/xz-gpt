@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { HiLogout } from "react-icons/hi";
-import { HiPencil, HiOutlineChevronDoubleLeft } from "react-icons/hi2";
+import { HiOutlineChevronDoubleLeft, HiQueueList } from "react-icons/hi2";
 
 const Header = (props: { isAuthenticated: boolean }) => {
   if (props.isAuthenticated) {
@@ -16,6 +16,15 @@ const Header = (props: { isAuthenticated: boolean }) => {
           </Link>
         </div>
         <div className="flex flex-row space-x-2 items-center text-base lg:text-xl">
+        <Link
+            href="/history"
+            className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-3 pr-3 lowercase rounded-full bg-purple-900 bg-opacity-50 text-purple-200 hover:bg-slate-900"
+          >
+            <span className="text-purple-500">
+              <HiQueueList/>
+            </span>
+            <p>history</p>
+          </Link>
           <Link
             href="/api/auth/logout"
             className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-3 pr-3 lowercase rounded-full bg-purple-900 bg-opacity-50 text-purple-200 hover:bg-slate-900"

@@ -39,7 +39,7 @@ const Chat = (props: {user: UserProfile | undefined}) => {
       <textarea
         className="prompt textarea font-sans p-2 lg:p-4 rounded-xl w-full bg-slate-100 bg-opacity-10 focus:border-2 focus:border-blue-500 placeholder-blue-500"
         placeholder="Write your prompt here..."
-        onInput={() => handlePromptChange}
+        onInput={handlePromptChange}
         value={prompt}
       ></textarea>
       <button
