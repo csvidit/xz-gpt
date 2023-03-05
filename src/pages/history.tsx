@@ -29,8 +29,8 @@ export default function Home() {
       console.log("Trying to get Firestore data");
       const fetchQuerySnapshot = async () => {
         const querySnapshot = await getDoc(docRef);
-        console.log(querySnapshot.data());
         setHistory(querySnapshot.data()?.history);
+        console.log(console.log(history));
       };
       fetchQuerySnapshot();
     }

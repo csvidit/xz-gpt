@@ -6,11 +6,12 @@ import { db } from "@/firebase.config";
 import { arrayUnion, doc, updateDoc } from "@firebase/firestore";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 
-
-const Chat = (props: {user: UserProfile | undefined}) => {
+const Chat = (props: { user: UserProfile | undefined }) => {
   const [response, setResponse] = useState("Give a prompt to get a response.");
   const [prompt, setPrompt] = useState("");
-  function handlePromptChange(event: { target: { value: SetStateAction<string>; }; }) {
+  function handlePromptChange(event: {
+    target: { value: SetStateAction<string> };
+  }) {
     setPrompt(event.target.value);
   }
 
@@ -24,12 +25,14 @@ const Chat = (props: {user: UserProfile | undefined}) => {
         model: "gpt-3.5-turbo",
         messages: [{ role: "user", content: prompt.toString() }],
       });
-      const res = completion.data;
-      const userRef = doc(db, "users", props.user!.sub!.toString());
-      const newEntry = {request: prompt.toString(), response: res};
-      const userHistoryUpdate = await updateDoc(userRef, {
-        history: arrayUnion(newEntry)
-      });
+      if (prompt != "" && prompt != " ") {
+        const res = completion.data;
+        const userRef = doc(db, "users", props.user!.sub!.toString());
+        const newEntry = { request: prompt.toString(), response: res };
+        const userHistoryUpdate = await updateDoc(userRef, {
+          history: arrayUnion(newEntry),
+        });
+      }
       setResponse(completion!.data!.choices[0]!.message!.content);
     }
   };

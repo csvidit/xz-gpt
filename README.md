@@ -1,38 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Xzayvian GPT
 
-## Getting Started
+Based on OpenAI's ChatGPT 3.5 Turbo LLM. Uses the latest version of the AI model through the official API.
 
-First, run the development server:
+## Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Front-end
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* Next.js
+* TailwindCSS
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Database
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+* Cloud Firestore
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Authentication
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+* Auth0
 
-## Learn More
+### Backend
 
-To learn more about Next.js, take a look at the following resources:
+* Node.js
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+(c) 2023 Vidit Khandelwal. While aspects of this project may be replicated with or without attribution, the name **Xzayvian GPT** is hereby reserved for exclusive use by Vidit Khandelwal as his copyrighted intellectual property. Therefore, you may replicate this project (and copy various parts of the source code) but you must not call the derivative project "Xzayvian."
