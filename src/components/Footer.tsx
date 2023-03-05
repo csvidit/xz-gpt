@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { HiArrowUpRight } from "react-icons/hi2";
-import { BsCodeSquare } from "react-icons/bs";
+import { BsCodeSquare, BsDot } from "react-icons/bs";
 
 const Footer = () => {
   return (
@@ -12,6 +12,8 @@ const Footer = () => {
         <div className="flex flex-row space-x-2 items-center text-neutral-900 dark:text-neutral-100 font-light text-xs uppercase">
           <BsCodeSquare />
           <p>A Closed Source Project</p>
+          <BsDot/>
+          <p>INVITE ONLY</p>
         </div>
       </footer>
     </div>

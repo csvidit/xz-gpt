@@ -4,19 +4,22 @@ import { useState } from "react";
 import { HiArrowRight } from "react-icons/hi2";
 
 const Chat = () => {
-  const [response, setResponse] = useState("GIVE A PROMPT TO GET A RESPONSE");
+  const [response, setResponse] = useState("Give a prompt to get a response.");
+  const [prompt, setPrompt] = useState("");
 
-  const generate = async (input) => {
-    console.log(document.getElementsByClassName("prompt")[0].textContent);
-    if (input == null) {
+  function handlePromptChange(event) {
+    setPrompt(event.target.value);
+  }
+
+  const generate = async () => {
+    console.log(prompt);
+    if (prompt == null) {
       setResponse("GIVE A PROMPT TO GET A RESPONSE!");
       return;
-    }
-    else
-    {
+    } else {
       const completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
-        messages: [{ role: "assistant", content: input }],
+        messages: [{ role: "user", content: prompt.toString() }],
       });
       console.log(completion.data);
       setResponse(completion.data.choices[0].message.content);
@@ -28,12 +31,12 @@ const Chat = () => {
       <textarea
         className="prompt textarea font-sans p-2 lg:p-4 rounded-xl w-full bg-slate-100 bg-opacity-10 focus:border-2 focus:border-blue-500 placeholder-blue-500"
         placeholder="Write your prompt here..."
+        onInput={handlePromptChange}
+        value={prompt}
       ></textarea>
       <button
         type="button"
-        onClick={() =>
-          generate(document.getElementsByClassName("prompt")[0].textContent)
-        }
+        onClick={() => generate()}
         href="/api/auth/logout"
         className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full bg-purple-900 bg-opacity-50 text-purple-200 hover:bg-slate-900"
       >

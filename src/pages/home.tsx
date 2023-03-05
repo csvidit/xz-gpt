@@ -37,7 +37,7 @@ export default function Home() {
         <Header isAuthenticated={true}/>
         <MainContent>
           <h1 className="text-4xl lg:text-6xl">Xzayvian GPT</h1>
-          <p className="text-xl lg:text-2xl">Welcome, {user?.nickname}</p>
+          <p className="text-xl lg:text-2xl capitalize">Welcome, {user?.nickname}</p>
           <Chat/>
         </MainContent>
         <Footer/>
