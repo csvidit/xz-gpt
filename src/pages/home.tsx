@@ -38,7 +38,7 @@ export default function Home() {
         <MainContent>
           <h1 className="text-4xl lg:text-6xl">Xzayvian GPT</h1>
           <p className="text-xl lg:text-2xl capitalize">Welcome, {user?.nickname}</p>
-          <Chat/>
+          <Chat user={user}/>
         </MainContent>
         <Footer/>
       </MainContainer>

@@ -4,7 +4,7 @@ import { BsCodeSquare, BsDot } from "react-icons/bs";
 
 const Footer = () => {
   return (
-    <div className="flex flex-row justify-center self-center w-screen">
+    <div className="flex flex-row justify-center self-center w-screen absolute bottom-0">
       <footer className="flex flex-col space-y-2 self-end p-4 items-end bg-neutral-200 dark:bg-neutral-900 dark:bg-opacity-30 bg-opacity-30 w-full text-neutral-900 dark:text-neutral-100 overflow-hidden">
         <div className="flex flex-row space-x-2 items-center font-extralight">
           <p className="text-2xl">&copy; 2023 VIDIT KHANDELWAL</p>
