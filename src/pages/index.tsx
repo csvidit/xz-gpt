@@ -41,8 +41,8 @@ export default function Home() {
         <MainContent>
           <h1 className="text-4xl lg:text-6xl">Xzayvian GPT</h1>
           <p className="text-xl lg:text-2xl">Based on OpenAI GPT-3.5-Turbo LLM</p>
-          <Link href="/api/auth/login" className="flex flex-row space-x-2 items-center text-xl lg:text-2xl mt-10 pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full bg-purple-900 bg-opacity-50 text-purple-200 hover:bg-slate-900">
-            <span className="text-purple-500">
+          <Link href="/api/auth/login" className="flex flex-row space-x-2 items-center text-xl lg:text-2xl mt-10 pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-slate-900">
+            <span className="text-neutral-200">
               <HiLogin />
             </span>
             <p>jump in</p>

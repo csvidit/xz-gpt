@@ -11,19 +11,18 @@ import Link from "next/link";
 import { HiLogin } from "react-icons/hi";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import Chat from "@/components/Chat";
 import Loading from "@/components/Loading";
+import HomeContent from "@/components/HomeContent";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-
   const { user, error, isLoading } = useUser();
   const router = useRouter();
-  if(isLoading)
-  {
-    return(<Loading/>);
+  if (isLoading) {
+    return <Loading />;
   }
   return (
     <>
@@ -34,13 +33,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MainContainer>
-        <Header isAuthenticated={true}/>
-        <MainContent>
-          <h1 className="text-4xl lg:text-6xl">Xzayvian GPT</h1>
-          <p className="text-xl lg:text-2xl capitalize">Welcome, {user?.nickname}</p>
-          <Chat user={user}/>
-        </MainContent>
-        <Footer/>
+        <Header isAuthenticated={true} />
+        <HomeContent>
+          <h1 className="text-2xl lg:text-4xl">Xzayvian GPT</h1>
+          <p className="text-lg lg:text-xl capitalize">
+            Welcome, {user?.nickname}
+          </p>
+          <Chat user={user} />
+        </HomeContent>
+        <Footer />
       </MainContainer>
     </>
   );
