@@ -6,8 +6,8 @@ const HistoryItem = (props: {key: any, id: string | null | undefined, label: str
         {props.label}
       </label>
       <input type="checkbox" id={"my-modal-"+props.id} className="modal-toggle" />
-      <div className="modal">
-        <div className="modal-box relative">
+      <div className="modal text-neutral-200 backdrop-blur-md">
+        <div className="modal-box relative bg-neutral-900 bg-opacity-50">
           <label
             htmlFor={"my-modal-"+props.id}
             className="btn btn-sm btn-circle absolute right-2 top-2"
