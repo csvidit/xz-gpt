@@ -4,7 +4,7 @@ const HistoryItem = (props: {key: any, id: string | null | undefined, label: str
   console.log(props.key);
   return (
     <div className="flex flex-col items-center font-sans">
-      <label htmlFor={"my-modal-"+props.id} className="btn text-neutral-900 font-normal capitalize p-4 bg-neutral-900 bg-opacity-10 hover:bg-opacity-30 border-0 rounded-full w-full lg:w-1/2">
+      <label htmlFor={"my-modal-"+props.id} className="btn text-neutral-900 font-normal capitalize p-4 bg-neutral-900 bg-opacity-10 hover:bg-opacity-30 border-0 rounded-full h-full w-full lg:w-1/2">
         {props.label}
       </label>
       <input type="checkbox" id={"my-modal-"+props.id} className="modal-toggle" />
