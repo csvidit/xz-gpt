@@ -3,13 +3,23 @@ import Link from "next/link";
 import { SetStateAction, useState } from "react";
 import { HiArrowRight } from "react-icons/hi2";
 import { db } from "@/firebase.config";
-import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "@firebase/firestore";
+import {
+  arrayUnion,
+  doc,
+  getDoc,
+  setDoc,
+  updateDoc,
+} from "@firebase/firestore";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
+import LoadingSmall from "./LoadingSmall";
 
 const Chat = (props: { user: UserProfile | undefined }) => {
   const [response, setResponse] = useState("Give a prompt to get a response.");
   const [prompt, setPrompt] = useState("");
-  function handlePromptChange(event: { target: { value: SetStateAction<string>; }; }) {
+  const [isLoading, setIsLoading] = useState(false);
+  function handlePromptChange(event: {
+    target: { value: SetStateAction<string> };
+  }) {
     setPrompt(event.target.value);
   }
 
@@ -19,7 +29,8 @@ const Chat = (props: { user: UserProfile | undefined }) => {
       setResponse("GIVE A PROMPT TO GET A RESPONSE!");
       return;
     } else {
-      setResponse("Response in progress...")
+      setResponse("Response in progress...");
+      setIsLoading(true);
       const completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [{ role: "user", content: prompt.toString() }],
@@ -29,22 +40,19 @@ const Chat = (props: { user: UserProfile | undefined }) => {
         const userRef = doc(db, "users", props.user!.sub!.toString());
         const newEntry = { request: prompt.toString(), response: res };
         const docSnap = await getDoc(userRef);
-        if(docSnap.exists())
-        {
+        if (docSnap.exists()) {
           const userHistoryUpdate = await updateDoc(userRef, {
             history: arrayUnion(newEntry),
           });
-        }
-        else
-        {
-          const docData = {history: []};
+        } else {
+          const docData = { history: [] };
           const setNewDoc = await setDoc(userRef, docData);
           const userHistoryUpdate = await updateDoc(userRef, {
             history: arrayUnion(newEntry),
           });
         }
-        
       }
+      setIsLoading(false);
       setResponse(completion!.data!.choices[0]!.message!.content);
     }
   };
@@ -57,16 +65,27 @@ const Chat = (props: { user: UserProfile | undefined }) => {
         onChange={handlePromptChange}
         value={prompt}
       ></textarea>
-      <button
-        type="button"
-        onClick={() => generate()}
-        className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900"
-      >
-        <p>send prompt</p>
-        <span className="text-neutral-200">
-          <HiArrowRight />
-        </span>
-      </button>
+      <div className="flex flex-row space-x-5 items-center">
+        {!isLoading && (
+          <button
+            type="button"
+            onClick={() => generate()}
+            className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900"
+          >
+            <p>send prompt</p>
+            <span className="text-neutral-200">
+              <HiArrowRight />
+            </span>
+          </button>
+        )}
+
+        {isLoading && (
+          <div className="flex flex-row space-x-1 items-center">
+            <p>Response in progress</p>
+            <LoadingSmall />
+          </div>
+        )}
+      </div>
       <div className="p-2 lg:p-4 font-sans bg-slate-900 bg-opacity-10 rounded-xl h-96 overflow-scroll">
         {response}
       </div>

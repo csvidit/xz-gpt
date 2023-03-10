@@ -19,7 +19,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    if (user != undefined) {
+    if (user != undefined && history.length <= 0) {
       const docRef = doc(db, "users", user!.sub!.toString());
       console.log("Trying to get Firestore data");
       const fetchQuerySnapshot = async () => {
