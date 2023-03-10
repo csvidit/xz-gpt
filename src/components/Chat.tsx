@@ -78,7 +78,6 @@ const Chat = (props: { user: UserProfile | undefined }) => {
             </span>
           </button>
         )}
-
         {isLoading && (
           <div className="flex flex-row space-x-1 items-center">
             <p>Response in progress</p>
