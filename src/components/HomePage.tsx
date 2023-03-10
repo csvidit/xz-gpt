@@ -9,6 +9,8 @@ import { useRouter } from "next/router";
 import Chat from "@/components/Chat";
 import Loading from "@/components/Loading";
 import HomeContent from "@/components/HomeContent";
+import Link from "next/link";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,11 +31,22 @@ export default function HomePage() {
       <MainContainer>
         <Header isAuthenticated={true} />
         <HomeContent>
-          <h1 className="text-2xl lg:text-4xl">Xzayvian GPT</h1>
+          <h1 className="text-2xl lg:text-4xl mt-10 lg:mt-0">
+            XZAYVIAN <span className="font-light">GPT</span>
+          </h1>
           <p className="text-lg lg:text-xl capitalize">
             Welcome, {user?.nickname}
           </p>
           <Chat user={user} />
+          <Link
+            href="/about"
+            className="flex flex-row space-x-2 items-center mt-10 pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-slate-900"
+          >
+            <span className="text-neutral-200">
+              <AiOutlineInfoCircle />
+            </span>
+            <p>learn more</p>
+          </Link>
         </HomeContent>
         <Footer />
       </MainContainer>

@@ -46,11 +46,9 @@ export default function Home() {
       <MainContainer>
         <Header isAuthenticated={true} />
         <HistoryContent>
-          <div></div>
-          <h1 className="text-2xl lg:text-4xl">Xzayvian GPT</h1>
-          <p className="text-lg lg:text-xl capitalize">
-            Welcome, {user?.nickname}
-          </p>
+          <h1 className="text-2xl lg:text-4xl flex flex-row items-center mt-10 lg:mt-0">
+            HISTORY
+          </h1>
           <HistoryContainer>
             {history?.map(
               (

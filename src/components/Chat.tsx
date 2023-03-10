@@ -1,6 +1,6 @@
 import { openai } from "@/openai.config";
 import Link from "next/link";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { HiArrowRight } from "react-icons/hi2";
 import { db } from "@/firebase.config";
 import {
@@ -18,11 +18,20 @@ const Chat = (props: { user: UserProfile | undefined }) => {
   const [response, setResponse] = useState("Give a prompt to get a response.");
   const [prompt, setPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [humanize, setHumanize] = useState(false);
   function handlePromptChange(event: {
     target: { value: SetStateAction<string> };
   }) {
     setPrompt(event.target.value);
   }
+  function handleHumanizeChange(event: any){
+    setHumanize(!humanize)
+    console.log("Humanize Value "+humanize.valueOf());
+  }
+
+  useEffect(() => {
+    console.log("Humanize Value "+humanize.valueOf());
+  }, [humanize])
 
   const generate = async () => {
     console.log(prompt);
@@ -32,14 +41,19 @@ const Chat = (props: { user: UserProfile | undefined }) => {
     } else {
       setResponse("Response in progress...");
       setIsLoading(true);
+      let request = prompt;
+      if(humanize)
+      {
+        request += ". I want you to humanize your response";
+      }
       const completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: prompt.toString() }],
+        messages: [{ role: "user", content: request.toString() }],
       });
       if (prompt != "" && prompt != " ") {
         const res = completion.data;
         const userRef = doc(db, "users", props.user!.sub!.toString());
-        const newEntry = { request: prompt.toString(), response: res };
+        const newEntry = { request: request.toString(), response: res };
         const docSnap = await getDoc(userRef);
         if (docSnap.exists()) {
           const userHistoryUpdate = await updateDoc(userRef, {
@@ -66,7 +80,7 @@ const Chat = (props: { user: UserProfile | undefined }) => {
         onChange={handlePromptChange}
         value={prompt}
       ></textarea>
-      <div className="flex flex-row space-x-5 items-center">
+      <div className="flex flex-row space-x-5 justify-between items-center">
         {!isLoading && (
           <button
             type="button"
@@ -79,6 +93,19 @@ const Chat = (props: { user: UserProfile | undefined }) => {
             </span>
           </button>
         )}
+        {!isLoading && (
+          <div className="form-control">
+            <label className="cursor-pointer label flex-row space-x-1 items-center">
+              <span className="label-text text-neutral-900 text-base">humanize?</span>
+              <input
+                type="checkbox"
+                className="toggle bg-neutral-200 checked:bg-blue-500"
+                onChange={() => setHumanize(!humanize)}
+                checked={humanize}
+              />
+            </label>
+          </div>
+        )}
         {isLoading && (
           <div className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full border border-neutral-900">
             <p>response in progress</p>
@@ -88,7 +115,6 @@ const Chat = (props: { user: UserProfile | undefined }) => {
       </div>
       <div className="p-2 lg:p-4 font-sans bg-slate-900 bg-opacity-10 rounded-xl h-96 overflow-scroll">
         <Markdown>{response}</Markdown>
-        
       </div>
     </div>
   );
