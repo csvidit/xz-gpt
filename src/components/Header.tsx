@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { HiLogout } from "react-icons/hi";
-import { HiOutlineChevronDoubleLeft, HiQueueList } from "react-icons/hi2";
+import { HiQueueList } from "react-icons/hi2";
 
 const Header = (props: { isAuthenticated: boolean }) => {
   if (props.isAuthenticated) {

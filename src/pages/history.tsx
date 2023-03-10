@@ -1,22 +1,17 @@
 import Head from "next/head";
-import { Inter } from "next/font/google";
 import MainContainer from "@/components/MainContainer";
-import MainContent from "@/components/MainContent";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Link from "next/link";
-import { HiLogin } from "react-icons/hi";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
 import Loading from "@/components/Loading";
 import { db } from "@/firebase.config";
-import { query, collection, getDocs, doc, getDoc } from "@firebase/firestore";
+import { doc, getDoc } from "@firebase/firestore";
 import { useEffect, useState } from "react";
 import HistoryContainer from "@/components/HistoryContainer";
 import HistoryItem from "@/components/HistoryItem";
-
-const inter = Inter({ subsets: ["latin"] });
+import HistoryContent from "@/components/HistoryContent";
 
 export default function Home() {
   const { user, error, isLoading } = useUser();
@@ -34,7 +29,7 @@ export default function Home() {
       };
       fetchQuerySnapshot();
     }
-  }, []);
+  }, [history, user]);
 
   if (isLoading) {
     return <Loading />;
@@ -50,7 +45,7 @@ export default function Home() {
       </Head>
       <MainContainer>
         <Header isAuthenticated={true} />
-        <MainContent>
+        <HistoryContent>
           <div></div>
           <h1 className="text-2xl lg:text-4xl">Xzayvian GPT</h1>
           <p className="text-lg lg:text-xl capitalize">
@@ -85,7 +80,7 @@ export default function Home() {
               }
             )}
           </HistoryContainer>
-        </MainContent>
+        </HistoryContent>
         <Footer />
       </MainContainer>
     </>
