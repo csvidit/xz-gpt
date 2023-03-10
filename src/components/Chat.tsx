@@ -12,6 +12,7 @@ import {
 } from "@firebase/firestore";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import LoadingSmall from "./LoadingSmall";
+import Markdown from "markdown-to-jsx";
 
 const Chat = (props: { user: UserProfile | undefined }) => {
   const [response, setResponse] = useState("Give a prompt to get a response.");
@@ -79,14 +80,15 @@ const Chat = (props: { user: UserProfile | undefined }) => {
           </button>
         )}
         {isLoading && (
-          <div className="flex flex-row space-x-1 items-center">
-            <p>Response in progress</p>
+          <div className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full border border-neutral-900">
+            <p>response in progress</p>
             <LoadingSmall />
           </div>
         )}
       </div>
       <div className="p-2 lg:p-4 font-sans bg-slate-900 bg-opacity-10 rounded-xl h-96 overflow-scroll">
-        {response}
+        <Markdown>{response}</Markdown>
+        
       </div>
     </div>
   );

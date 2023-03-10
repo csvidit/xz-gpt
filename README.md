@@ -1,6 +1,8 @@
 # Xzayvian GPT
 
-Based on OpenAI's ChatGPT 3.5 Turbo LLM. Uses the latest version of the AI model through the official API. The user can send prompts and get a response to them. The search history of the user is connected to their profile and stored in their dedicated Cloud Firestore document. They can see their history (and the response they had received) by going to the ```/history``` route. 
+Based on OpenAI's ChatGPT 3.5 Turbo LLM. Uses the latest version of the model through the official API. New users can sign up using their Google account, which will be then be used to create their profile on the project's Auth0 domain. (username-password signups are not available at the moment)
+
+The user can send prompts and get a response to them. The search history of the user is connected to their user ID and stored in their dedicated Cloud Firestore document. They can see their history (and the response they had received) by going to the ```/history``` route. 
 
 ## Tech Stack
 
