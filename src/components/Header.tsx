@@ -12,7 +12,7 @@ const Header = (props: { isAuthenticated: boolean }) => {
         <div className="flex flex-row space-x-2 items-center">
           <Link
             href="/"
-            className="flex flex-row space-x-1 text-neutral-900 hover:text-neutral-500"
+            className="flex flex-row space-x-1 text-neutral-900"
           >
             <p className="">XZAYVIAN</p>
             <p className="font-light">GPT</p>
