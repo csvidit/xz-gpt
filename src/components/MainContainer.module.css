@@ -145,13 +145,14 @@
 @media (prefers-color-scheme: dark)
 {
   .main_background{
-    background-image: url("/background.png");
+    background-image: url("/background.webp");
+    background-blend-mode: soft-light;
   }
 }
 
 @media (prefers-color-scheme: light)
 {
   .main_background{
-    background-image: url("/background.png");
+    background-image: url("/background.webp");
   }
 }
