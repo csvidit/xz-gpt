@@ -10,10 +10,10 @@ const Footer = () => {
           <p className="text-2xl">&copy; 2023 VIDIT KHANDELWAL</p>
         </div>
         <div className="flex flex-row space-x-2 items-center font-light text-xs uppercase">
-          <BsCodeSquare />
-          <p>A Closed Source Project</p>
-          <BsDot/>
-          <p>INVITE ONLY</p>
+          <Link href="https://github.com/csvidit/xz-gpt">
+            check out this project&apos;s repository
+          </Link>
+          <HiArrowUpRight />
         </div>
       </footer>
     </div>
