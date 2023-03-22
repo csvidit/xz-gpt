@@ -23,7 +23,7 @@ export default function HomePage() {
   return (
     <>
       <Head>
-      <title>Xzayvian GPT</title>
+        <title>Xzayvian GPT</title>
         <meta
           name="description"
           content="The Xzayvian chatbot based on OpenAI GPT-3.5 Turbo, a Vidit Khandelwal Project"
@@ -50,6 +50,10 @@ export default function HomePage() {
       <MainContainer>
         <Header isAuthenticated={true} />
         <HomeContent>
+          <div className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-3 pr-3 w-fit mb-5 text-xs lowercase rounded-full border border-neutral-900">
+          <AiOutlineInfoCircle />
+            <p>coming early april: contextual prompts and follow-up questions</p>
+          </div>
           <h1 className="text-2xl lg:text-4xl mt-10 lg:mt-0">
             XZAYVIAN <span className="font-light">GPT</span>
           </h1>
