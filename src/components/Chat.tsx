@@ -84,7 +84,7 @@ const Chat = (props: { user: UserProfile | undefined }) => {
           <button
             type="button"
             onClick={() => generate()}
-            className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900"
+            className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 transition-colors"
           >
             <p>send prompt</p>
             <span className="text-neutral-200">

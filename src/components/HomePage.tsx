@@ -50,11 +50,11 @@ export default function HomePage() {
       <MainContainer>
         <Header isAuthenticated={true} />
         <HomeContent>
-          <div className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-3 pr-3 w-fit mb-5 text-xs lowercase rounded-full border border-neutral-900">
+          <div className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-3 pr-3 w-fit mt-10 lg:mt-0 mb-5 text-xs lowercase rounded-full border border-neutral-900">
           <AiOutlineInfoCircle />
             <p>coming early april: contextual prompts and follow-up questions</p>
           </div>
-          <h1 className="text-2xl lg:text-4xl mt-10 lg:mt-0">
+          <h1 className="text-2xl lg:text-4xl lg:mt-0">
             XZAYVIAN <span className="font-light">GPT</span>
           </h1>
           <p className="text-lg lg:text-xl capitalize">
@@ -63,7 +63,7 @@ export default function HomePage() {
           <Chat user={user} />
           <Link
             href="/about"
-            className="flex flex-row space-x-2 items-center mt-10 pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-slate-900"
+            className="flex flex-row space-x-2 items-center mt-10 pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-slate-900 transition-colors"
           >
             <span className="text-neutral-200">
               <AiOutlineInfoCircle />
