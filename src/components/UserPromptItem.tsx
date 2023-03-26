@@ -1,4 +1,3 @@
-import Markdown from "markdown-to-jsx";
 import { HiUserCircle } from "react-icons/hi2";
 import ChatItemContainer from "./ChatItemContainer";
 import ChatTextContent from "./ChatTextContent";

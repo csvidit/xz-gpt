@@ -1,5 +1,3 @@
-import Markdown from "markdown-to-jsx";
-import { HiBolt } from "react-icons/hi2";
 import { CgBot } from "react-icons/cg";
 import ChatTextContent from "./ChatTextContent";
 import ChatItemContainer from "./ChatItemContainer";
