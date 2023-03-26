@@ -50,7 +50,7 @@ export default function Home() {
             HISTORY
           </h1>
           <HistoryContainer>
-            {history?.map(
+            {history.length > 0 && history?.map(
               (
                 x: {
                   response: {
