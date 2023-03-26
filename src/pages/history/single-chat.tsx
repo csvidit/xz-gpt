@@ -58,15 +58,8 @@ export default function Home() {
           <Header isAuthenticated={true} />
           <HistoryContent>
             <h1 className="text-2xl lg:text-4xl flex flex-row items-center mt-10 lg:mt-0">
-              HISTORY
+              Single-Chat History
             </h1>
-            <div className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-3 pr-3 w-fit mb-5 text-base lowercase rounded-full border border-neutral-900">
-              <AiOutlineInfoCircle />
-              <p>
-                chat history for the new conversational-style chats are not
-                available right now.
-              </p>
-            </div>
             <HistoryContainer>
               <p>No History</p>
             </HistoryContainer>
@@ -92,15 +85,8 @@ export default function Home() {
         <Header isAuthenticated={true} />
         <HistoryContent>
           <h1 className="text-2xl lg:text-4xl flex flex-row items-center mt-10 lg:mt-0">
-            HISTORY
+            Single-Chat History
           </h1>
-          <div className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-3 pr-3 w-fit mb-5 text-base lowercase rounded-full border border-neutral-900">
-            <AiOutlineInfoCircle />
-            <p>
-              chat history for the new conversational-style chats are not
-              available right now.
-            </p>
-          </div>
           <HistoryContainer>
             {history.length > 0
               ? history?.map(
