@@ -12,16 +12,31 @@ import {
 } from "@firebase/firestore";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import LoadingSmall from "./LoadingSmall";
-import Markdown from "markdown-to-jsx";
 import UserPromptItem from "./UserPromptItem";
 import BotResponseItem from "./BotResponseItem";
+import SystemMessageItem from "./SystemMessageItem";
+import {
+  ChatCompletionRequestMessage,
+  CreateChatCompletionRequest,
+} from "openai";
 
 const ChatV2 = (props: { user: UserProfile | undefined }) => {
-  const [currentConversation, setCurrentConversation] = useState([{prompt: "User Prompt", response: "Bot Response"}]);
+  const [currentConversation, setCurrentConversation] = useState<
+    ChatCompletionRequestMessage[]
+  >([
+    {
+      role: "system",
+      content:
+        "You are Xzayvian GPT, an AI chatbot based on OpenAI's GPT 3.5 Turbo LLM",
+    }
+  ]);
   const [response, setResponse] = useState("Give a prompt to get a response.");
   const [prompt, setPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [humanize, setHumanize] = useState(false);
+  //   const [systemMessage, setSystemMessage] = useState(
+  //     "This is the system message"
+  //   );
   function handlePromptChange(event: {
     target: { value: SetStateAction<string> };
   }) {
@@ -45,30 +60,38 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
       setResponse("Response in progress...");
       setIsLoading(true);
       let request = prompt;
+      let newConversation = currentConversation;
+      newConversation.push({ role: "user", content: request });
+      setCurrentConversation(newConversation);
       if (humanize) {
         request += ". I want you to humanize your response";
       }
       const completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: request.toString() }],
+        messages: currentConversation,
       });
-      if (prompt != "" && prompt != " ") {
-        const res = completion.data;
-        const userRef = doc(db, "users", props.user!.sub!.toString());
-        const newEntry = { request: request.toString(), response: res };
-        const docSnap = await getDoc(userRef);
-        if (docSnap.exists()) {
-          const userHistoryUpdate = await updateDoc(userRef, {
-            history: arrayUnion(newEntry),
-          });
-        } else {
-          const docData = { history: [] };
-          const setNewDoc = await setDoc(userRef, docData);
-          const userHistoryUpdate = await updateDoc(userRef, {
-            history: arrayUnion(newEntry),
-          });
-        }
-      }
+      //   if (prompt != "" && prompt != " ") {
+      //     const res = completion.data;
+      //     const userRef = doc(db, "users", props.user!.sub!.toString());
+      //     const newEntry = { request: request.toString(), response: res };
+      //     const docSnap = await getDoc(userRef);
+      //     if (docSnap.exists()) {
+      //       const userHistoryUpdate = await updateDoc(userRef, {
+      //         history: arrayUnion(newEntry),
+      //       });
+      //     } else {
+      //       const docData = { history: [] };
+      //       const setNewDoc = await setDoc(userRef, docData);
+      //       const userHistoryUpdate = await updateDoc(userRef, {
+      //         history: arrayUnion(newEntry),
+      //       });
+      //     }
+      //   }
+      newConversation.push({
+        role: "assistant",
+        content: completion!.data!.choices[0]!.message!.content,
+      });
+      setCurrentConversation(newConversation);
       setIsLoading(false);
       setResponse(completion!.data!.choices[0]!.message!.content);
     }
@@ -76,10 +99,14 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
 
   return (
     <div className="mt-10 w-full lg:w-1/2 flex flex-col space-y-5">
+      {/* <SystemMessageItem
+        currentMessage={systemMessage}
+        messageChanger={setSystemMessage}
+      /> */}
       {!isLoading && (
         <button
           type="button"
-          onClick={() => generate()}
+          onClick={() => setCurrentConversation([])}
           className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 transition-colors"
         >
           <p>reset chat</p>
@@ -88,18 +115,18 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
           </span>
         </button>
       )}
+
       <div className="responses rounded-xl h-96 overflow-scroll">
-        {currentConversation.map((x: {prompt: string, response: string}, index) => {
-          return (
-            <div key={index}>
-              <UserPromptItem>{x.prompt}</UserPromptItem>
-              <BotResponseItem>{x.response}</BotResponseItem>
-            </div>
-          );
+        {currentConversation.map((x, index) => {
+          if (x.role === "user") {
+            return <UserPromptItem username={props.user?.nickname} key={index}>{x.content}</UserPromptItem>;
+          } else if (x.role === "assistant") {
+            return <BotResponseItem key={index}>{x.content}</BotResponseItem>;
+          }
         })}
       </div>
       <textarea
-        className="prompt textarea font-sans text-base p-2 lg:p-4 rounded-xl w-full bg-slate-900 bg-opacity-10 focus:ring-2 focus:border-blue-600 placeholder-blue-600"
+        className="prompt textarea font-sans text-base p-2 lg:p-4 rounded-xl w-full bg-slate-900 bg-opacity-10 shadow-md shadow-blue-700 focus:ring-2 focus:border-blue-700 placeholder-blue-700"
         placeholder="Write your prompt here..."
         onChange={handlePromptChange}
         value={prompt}
