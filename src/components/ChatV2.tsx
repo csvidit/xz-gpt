@@ -27,8 +27,8 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
     {
       role: "system",
       content:
-        "You are Xzayvian GPT, an AI chatbot based on OpenAI's GPT 3.5 Turbo LLM",
-    }
+        "You are Xzayvian GPT, an AI chatbot based on OpenAI's GPT 3.5 Turbo LLM. You were made by Vidit Khandelwal, a student at DePauw University. You are very friendly. If there is some request that is beyond your abilities, you still try your best to give a good response to the user, and do not refuse to answer.",
+    },
   ]);
   const [response, setResponse] = useState("Give a prompt to get a response.");
   const [prompt, setPrompt] = useState("");
@@ -51,6 +51,23 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
     console.log("Humanize Value " + humanize.valueOf());
   }, [humanize]);
 
+  const handleResetChat = async () => {
+    const userRef = doc(db, "users", props.user!.sub!.toString());
+    const docSnap = await getDoc(userRef);
+    if (docSnap.exists()) {
+      const userHistoryUpdate = await updateDoc(userRef, {
+        history_multi_chat: arrayUnion(JSON.stringify(currentConversation)),
+      });
+    } else {
+      const docData = { history_multi_chat: [] };
+      const setNewDoc = await setDoc(userRef, docData);
+      const userHistoryUpdate = await updateDoc(userRef, {
+        history_multi_chat: arrayUnion(JSON.stringify(currentConversation)),
+      });
+    }
+    setCurrentConversation([]);
+  };
+
   const generate = async () => {
     console.log(prompt);
     if (prompt == null || prompt == "" || prompt == " ") {
@@ -60,33 +77,16 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
       setResponse("Response in progress...");
       setIsLoading(true);
       let request = prompt;
-      let newConversation = currentConversation;
-      newConversation.push({ role: "user", content: request });
-      setCurrentConversation(newConversation);
       if (humanize) {
         request += ". I want you to humanize your response";
       }
+      let newConversation = currentConversation;
+      newConversation.push({ role: "user", content: request });
+      setCurrentConversation(newConversation);
       const completion = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: currentConversation,
       });
-      //   if (prompt != "" && prompt != " ") {
-      //     const res = completion.data;
-      //     const userRef = doc(db, "users", props.user!.sub!.toString());
-      //     const newEntry = { request: request.toString(), response: res };
-      //     const docSnap = await getDoc(userRef);
-      //     if (docSnap.exists()) {
-      //       const userHistoryUpdate = await updateDoc(userRef, {
-      //         history: arrayUnion(newEntry),
-      //       });
-      //     } else {
-      //       const docData = { history: [] };
-      //       const setNewDoc = await setDoc(userRef, docData);
-      //       const userHistoryUpdate = await updateDoc(userRef, {
-      //         history: arrayUnion(newEntry),
-      //       });
-      //     }
-      //   }
       newConversation.push({
         role: "assistant",
         content: completion!.data!.choices[0]!.message!.content,
@@ -98,7 +98,7 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
   };
 
   return (
-    <div className="mt-10 w-full lg:w-1/2 flex flex-col space-y-5">
+    <div className="mt-0 lg:mt-10 w-full lg:w-1/2 flex flex-col space-y-4">
       {/* <SystemMessageItem
         currentMessage={systemMessage}
         messageChanger={setSystemMessage}
@@ -106,7 +106,7 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
       {!isLoading && (
         <button
           type="button"
-          onClick={() => setCurrentConversation([])}
+          onClick={() => handleResetChat()}
           className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 transition-colors"
         >
           <p>reset chat</p>
@@ -116,56 +116,62 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
         </button>
       )}
 
-      <div className="responses rounded-xl h-96 overflow-scroll">
+      <div className="responses rounded-xl h-80 lg:h-96 overflow-scroll">
         {currentConversation.map((x, index) => {
           if (x.role === "user") {
-            return <UserPromptItem username={props.user?.nickname} key={index}>{x.content}</UserPromptItem>;
+            return (
+              <UserPromptItem username={props.user?.nickname} key={index}>
+                {x.content}
+              </UserPromptItem>
+            );
           } else if (x.role === "assistant") {
             return <BotResponseItem key={index}>{x.content}</BotResponseItem>;
           }
         })}
       </div>
-      <textarea
-        className="prompt textarea font-sans text-base p-2 lg:p-4 rounded-xl w-full bg-slate-900 bg-opacity-10 shadow-md shadow-blue-700 focus:ring-2 focus:border-blue-700 placeholder-blue-700"
-        placeholder="Write your prompt here..."
-        onChange={handlePromptChange}
-        value={prompt}
-      ></textarea>
-      <div className="flex flex-row space-x-5 justify-between items-center">
-        {!isLoading && (
-          <button
-            type="button"
-            onClick={() => generate()}
-            className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 transition-colors"
-          >
-            <p>send prompt</p>
-            <span className="text-neutral-200">
-              <HiArrowRight />
-            </span>
-          </button>
-        )}
-        {!isLoading && (
-          <div className="form-control">
-            <label className="cursor-pointer label flex-row space-x-1 items-center">
-              <span className="label-text text-neutral-900 text-base">
-                humanize?
+      <div className="flex flex-col space-y-2 lg:space-y-4">
+        <textarea
+          className="prompt textarea font-sans text-base p-2 lg:p-4 rounded-xl w-full resize-none bg-slate-900 bg-opacity-10 shadow-md shadow-blue-700 focus:ring-2 focus:border-blue-700 placeholder-blue-700 caret-blue-700"
+          placeholder="Write your prompt here..."
+          onChange={handlePromptChange}
+          value={prompt}
+        ></textarea>
+        <div className="flex flex-row space-x-5 justify-between items-center">
+          {!isLoading && (
+            <button
+              type="button"
+              onClick={() => generate()}
+              className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 transition-colors"
+            >
+              <p>send prompt</p>
+              <span className="text-neutral-200">
+                <HiArrowRight />
               </span>
-              <input
-                data-theme="dracula"
-                type="checkbox"
-                className="toggle toggle-primary bg-neutral-200 checked:bg-blue-500"
-                onChange={() => setHumanize(!humanize)}
-                checked={humanize}
-              />
-            </label>
-          </div>
-        )}
-        {isLoading && (
-          <div className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full border border-neutral-900">
-            <p>response in progress</p>
-            <LoadingSmall />
-          </div>
-        )}
+            </button>
+          )}
+          {!isLoading && (
+            <div className="form-control">
+              <label className="cursor-pointer label flex-row space-x-1 items-center">
+                <span className="label-text text-neutral-900 text-base">
+                  humanize?
+                </span>
+                <input
+                  data-theme="dracula"
+                  type="checkbox"
+                  className="toggle toggle-primary bg-neutral-200 checked:bg-blue-500"
+                  onChange={() => setHumanize(!humanize)}
+                  checked={humanize}
+                />
+              </label>
+            </div>
+          )}
+          {isLoading && (
+            <div className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full border border-neutral-900">
+              <p>response in progress</p>
+              <LoadingSmall />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

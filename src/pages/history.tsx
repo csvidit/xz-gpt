@@ -20,13 +20,19 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    if (user != undefined && history.length <= 0) {
+    if (user != undefined) {
       const docRef = doc(db, "users", user!.sub!.toString());
       console.log("Trying to get Firestore data");
       const fetchQuerySnapshot = async () => {
         const querySnapshot = await getDoc(docRef);
-        setHistory(querySnapshot.data()?.history);
-        console.log(console.log(history));
+        if (querySnapshot.exists()) {
+          setHistory(querySnapshot.data()?.history);
+          console.log(console.log(history));
+        } else {
+          setHistory([]);
+          console.log("No History");
+          console.log(history.length);
+        }
       };
       fetchQuerySnapshot();
     }
@@ -34,6 +40,41 @@ export default function Home() {
 
   if (isLoading) {
     return <Loading />;
+  }
+
+  if (history == null || history == undefined) {
+    return (
+      <>
+        <Head>
+          <title>Xzayvian GPT / History</title>
+          <meta
+            name="description"
+            content="Your search history on Xzayvian GPT"
+          />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <MainContainer>
+          <Header isAuthenticated={true} />
+          <HistoryContent>
+            <h1 className="text-2xl lg:text-4xl flex flex-row items-center mt-10 lg:mt-0">
+              HISTORY
+            </h1>
+            <div className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-3 pr-3 w-fit mb-5 text-base lowercase rounded-full border border-neutral-900">
+              <AiOutlineInfoCircle />
+              <p>
+                chat history for the new conversational-style chats are not
+                available right now.
+              </p>
+            </div>
+            <HistoryContainer>
+              <p>No History</p>
+            </HistoryContainer>
+          </HistoryContent>
+          <Footer />
+        </MainContainer>
+      </>
+    );
   }
 
   return (
@@ -53,41 +94,43 @@ export default function Home() {
           <h1 className="text-2xl lg:text-4xl flex flex-row items-center mt-10 lg:mt-0">
             HISTORY
           </h1>
-          <div className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-3 pr-3 w-fit mb-5 text-xs lowercase rounded-full border border-neutral-900">
+          <div className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-3 pr-3 w-fit mb-5 text-base lowercase rounded-full border border-neutral-900">
             <AiOutlineInfoCircle />
             <p>
-              chat history for the new conversational-style chats are not available right now. 
+              chat history for the new conversational-style chats are not
+              available right now.
             </p>
           </div>
           <HistoryContainer>
-            {history.length > 0 &&
-              history?.map(
-                (
-                  x: {
-                    response: {
-                      id: string | null | undefined;
-                      choices: {
-                        message: {
-                          id: string | null | undefined;
-                          content: any;
-                        };
-                      }[];
-                    };
-                    request: string;
-                  },
-                  index
-                ) => {
-                  return (
-                    <HistoryItem
-                      key={index}
-                      id={x?.response?.id}
-                      label={x?.request}
-                    >
-                      {x?.response?.choices[0]?.message?.content}
-                    </HistoryItem>
-                  );
-                }
-              )}
+            {history.length > 0
+              ? history?.map(
+                  (
+                    x: {
+                      response: {
+                        id: string | null | undefined;
+                        choices: {
+                          message: {
+                            id: string | null | undefined;
+                            content: any;
+                          };
+                        }[];
+                      };
+                      request: string;
+                    },
+                    index
+                  ) => {
+                    return (
+                      <HistoryItem
+                        key={index}
+                        id={x?.response?.id}
+                        label={x?.request}
+                      >
+                        {x?.response?.choices[0]?.message?.content}
+                      </HistoryItem>
+                    );
+                  }
+                )
+              : "No History"}
           </HistoryContainer>
         </HistoryContent>
         <Footer />
