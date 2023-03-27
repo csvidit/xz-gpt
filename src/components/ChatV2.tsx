@@ -19,6 +19,7 @@ import {
   ChatCompletionRequestMessage,
   CreateChatCompletionRequest,
 } from "openai";
+import ChatV2Container from "./ChatV2Container";
 
 const ChatV2 = (props: { user: UserProfile | undefined }) => {
   const [currentConversation, setCurrentConversation] = useState<
@@ -98,7 +99,7 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
   };
 
   return (
-    <div className="mt-0 lg:mt-10 w-full lg:w-1/2 flex flex-col space-y-4">
+    <ChatV2Container>
       {/* <SystemMessageItem
         currentMessage={systemMessage}
         messageChanger={setSystemMessage}
@@ -173,7 +174,7 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
           )}
         </div>
       </div>
-    </div>
+    </ChatV2Container>
   );
 };
 
