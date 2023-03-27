@@ -57,7 +57,8 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
     const docSnap = await getDoc(userRef);
     if (docSnap.exists()) {
       const userHistoryUpdate = await updateDoc(userRef, {
-        history_multi_chat: arrayUnion(JSON.stringify(currentConversation)),
+        // history_multi_chat: arrya(JSON.stringify(currentConversation)),
+        // history_multi_chat: arrayUnion(JSON.stringify(currentConversation)),
       });
     } else {
       const docData = { history_multi_chat: [] };
@@ -104,19 +105,6 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
         currentMessage={systemMessage}
         messageChanger={setSystemMessage}
       /> */}
-      {!isLoading && (
-        <button
-          type="button"
-          onClick={() => handleResetChat()}
-          className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 transition-colors"
-        >
-          <p>reset chat</p>
-          <span className="text-neutral-200">
-            <HiArrowUturnLeft />
-          </span>
-        </button>
-      )}
-
       <div className="responses rounded-xl h-80 lg:h-96 overflow-scroll">
         {currentConversation.map((x, index) => {
           if (x.role === "user") {
@@ -137,40 +125,54 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
           onChange={handlePromptChange}
           value={prompt}
         ></textarea>
-        <div className="flex flex-row space-x-5 justify-between items-center">
+        <div className="flex flex-row space-x-4 justify-between items-center">
+          <div className="flex flex-row justify-start items-center space-x-4">
+            {!isLoading && (
+              <button
+                type="button"
+                onClick={() => generate()}
+                className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 hover:text-blue-400 transition-colors"
+              >
+                <p>send prompt</p>
+
+                <HiArrowRight />
+              </button>
+            )}
+
+            {!isLoading && (
+              <div className="form-control">
+                <label className="cursor-pointer label flex-row space-x-1 items-center">
+                  <span className="label-text text-neutral-900 text-base">
+                    humanize?
+                  </span>
+                  <input
+                    data-theme="dracula"
+                    type="checkbox"
+                    className="toggle toggle-primary bg-neutral-200 checked:bg-blue-500"
+                    onChange={() => setHumanize(!humanize)}
+                    checked={humanize}
+                  />
+                </label>
+              </div>
+            )}
+            {isLoading && (
+              <div className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full border border-neutral-900">
+                <p>response in progress</p>
+                <LoadingSmall />
+              </div>
+            )}
+          </div>
+
           {!isLoading && (
             <button
               type="button"
-              onClick={() => generate()}
-              className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 transition-colors"
+              onClick={() => handleResetChat()}
+              className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 hover:text-amber-400 transition-colors"
             >
-              <p>send prompt</p>
-              <span className="text-neutral-200">
-                <HiArrowRight />
-              </span>
+              <p>reset chat</p>
+
+              <HiArrowUturnLeft />
             </button>
-          )}
-          {!isLoading && (
-            <div className="form-control">
-              <label className="cursor-pointer label flex-row space-x-1 items-center">
-                <span className="label-text text-neutral-900 text-base">
-                  humanize?
-                </span>
-                <input
-                  data-theme="dracula"
-                  type="checkbox"
-                  className="toggle toggle-primary bg-neutral-200 checked:bg-blue-500"
-                  onChange={() => setHumanize(!humanize)}
-                  checked={humanize}
-                />
-              </label>
-            </div>
-          )}
-          {isLoading && (
-            <div className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full border border-neutral-900">
-              <p>response in progress</p>
-              <LoadingSmall />
-            </div>
           )}
         </div>
       </div>
