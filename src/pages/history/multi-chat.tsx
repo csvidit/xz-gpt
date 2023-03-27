@@ -13,9 +13,64 @@ import HistoryContainer from "@/components/HistoryContainer";
 import HistoryItem from "@/components/HistoryItem";
 import HistoryContent from "@/components/HistoryContent";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import Link from "next/link";
+import HistoryMultiChatContent from "@/components/HistoryMultiChatContent";
 
 export default function Home() {
+  const { user, error, isLoading } = useUser();
+  const [history, setHistory] = useState([]);
+  const router = useRouter();
+
+//   useEffect(() => {
+//     if (user != undefined || history.length === 0 || history === null || history === undefined) {
+//       const docRef = doc(db, "users", user!.sub!.toString());
+//       console.log("Trying to get Firestore data");
+//       const fetchQuerySnapshot = async () => {
+//         const querySnapshot = await getDoc(docRef);
+//         if (querySnapshot.exists()) {
+//           setHistory(querySnapshot.data()?.history_multi_chat);
+//           console.log(console.log(history));
+//         } else {
+//           setHistory([]);
+//           console.log("No History");
+//           console.log(history.length);
+//         }
+//       };
+//       fetchQuerySnapshot();
+//     }
+//   }, [history, user]);
+
+//   if (isLoading) {
+//     return <Loading />;
+//   }
+
+  if (history == null || history == undefined) {
+    return (
+      <>
+        <Head>
+          <title>Xzayvian GPT / History</title>
+          <meta
+            name="description"
+            content="Your search history on Xzayvian GPT"
+          />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <MainContainer>
+          <Header isAuthenticated={true} />
+          <HistoryContent>
+            <h1 className="text-2xl lg:text-4xl flex flex-row items-center mt-10 lg:mt-0">
+              Multi-Chat History
+            </h1>
+            <HistoryContainer>
+              <p>No History</p>
+            </HistoryContainer>
+          </HistoryContent>
+          <Footer />
+        </MainContainer>
+      </>
+    );
+  }
+
   return (
     <>
       <Head>
@@ -29,18 +84,20 @@ export default function Home() {
       </Head>
       <MainContainer>
         <Header isAuthenticated={true} />
-        <HistoryContent>
-          <h1 className="flex-grow text-2xl lg:text-4xl flex flex-row items-center mt-10 lg:mt-0">
+        <HistoryMultiChatContent>
+          <h1 className="text-2xl lg:text-4xl flex flex-row items-center mt-10 lg:mt-0 text-neutral-900">
             Multi-Chat History
           </h1>
-          <div className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-3 pr-3 w-fit mb-5 text-lg lowercase rounded-full border border-neutral-900">
-            <AiOutlineInfoCircle />
-            <p>
-              chat history for the new conversational-style chats is not
-              available right now.
-            </p>
-          </div>
-        </HistoryContent>
+          <HistoryContainer>
+            {history.length > 0
+              ? history?.map((x) => {
+                  let arr = JSON.parse(x);
+                  console.log(arr);
+
+                })
+              : "No History"}
+          </HistoryContainer>
+        </HistoryMultiChatContent>
         <Footer />
       </MainContainer>
     </>
