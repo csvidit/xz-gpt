@@ -17,7 +17,6 @@ import BotResponseItem from "./BotResponseItem";
 import SystemMessageItem from "./SystemMessageItem";
 import {
   ChatCompletionRequestMessage,
-  CreateChatCompletionRequest,
 } from "openai";
 import ChatV2Container from "./ChatV2Container";
 import { AiOutlineInfoCircle } from "react-icons/ai";
@@ -136,9 +135,9 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
               <button
                 type="button"
                 onClick={() => generate()}
-                className="flex flex-row space-x-2 items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 hover:text-blue-400 transition-colors"
+                className="flex flex-row lg:space-x-2 items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 hover:text-blue-400 transition-colors"
               >
-                <p>send prompt</p>
+                <p className="hidden lg:flex">send prompt</p>
 
                 <HiArrowRight />
               </button>
@@ -172,9 +171,9 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
             <button
               type="button"
               onClick={() => handleResetChat()}
-              className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 hover:text-amber-400 transition-colors"
+              className="flex flex-row lg:space-x-2 justify-center items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 hover:text-amber-400 transition-colors"
             >
-              <p>reset chat</p>
+              <p className="hidden lg:flex">reset chat</p>
 
               <HiArrowUturnLeft />
             </button>
