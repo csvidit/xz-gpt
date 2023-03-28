@@ -22,6 +22,7 @@ import ChatV2Container from "./ChatV2Container";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
 const ChatV2 = (props: { user: UserProfile | undefined }) => {
+  
   const [currentConversation, setCurrentConversation] = useState<
     ChatCompletionRequestMessage[]
   >([
@@ -35,6 +36,9 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
   const [prompt, setPrompt] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [humanize, setHumanize] = useState(false);
+
+  const gptModel = props.user?.sub === process.env.NEXT_PUBLIC_VIDITKHANDELWAL_USER_ID ? "gpt-4-0314" : "gpt-3.5-turbo";
+
   //   const [systemMessage, setSystemMessage] = useState(
   //     "This is the system message"
   //   );
@@ -86,7 +90,7 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
       newConversation.push({ role: "user", content: request });
       setCurrentConversation(newConversation);
       const completion = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
+        model: gptModel,
         messages: currentConversation,
       });
       newConversation.push({
