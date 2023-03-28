@@ -3,7 +3,7 @@ import UserPromptItem from "./UserPromptItem";
 import { Key } from "react";
 import BotResponseItem from "./BotResponseItem";
 
-const MultiChatHistoryItem = (props: {key: any, id: any, label: any, children: any}) => {
+const MultiChatHistoryItem = (props: {key: any, id: any, label: any, children: any, username: string | null | undefined}) => {
 
   const labelToDisplay: string = props.label.length > 100 ? props.label.substring(0, 100)+"..." : props.label;
   console.log(props.key);
@@ -32,7 +32,7 @@ const MultiChatHistoryItem = (props: {key: any, id: any, label: any, children: a
                 }
                 if(x.role === "user")
                 {
-                    return <UserPromptItem variant="history" key={index} username="User">{x.content}</UserPromptItem>
+                    return <UserPromptItem variant="history" key={index} username={props.username}>{x.content}</UserPromptItem>
                 }
                 else
                 {

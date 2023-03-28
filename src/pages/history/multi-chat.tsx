@@ -96,7 +96,7 @@ export default function Home() {
                   console.log(arr);
                   if(arr.length > 1)
                   {
-                    return <MultiChatHistoryItem key={index} id={index} label={arr[1].content}>{arr}</MultiChatHistoryItem>
+                    return <MultiChatHistoryItem username={user?.nickname} key={index} id={index} label={arr[1].content}>{arr}</MultiChatHistoryItem>
                   }
                   else
                   {
