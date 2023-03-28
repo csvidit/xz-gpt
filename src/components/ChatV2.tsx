@@ -20,6 +20,7 @@ import {
   CreateChatCompletionRequest,
 } from "openai";
 import ChatV2Container from "./ChatV2Container";
+import { AiOutlineInfoCircle } from "react-icons/ai";
 
 const ChatV2 = (props: { user: UserProfile | undefined }) => {
   const [currentConversation, setCurrentConversation] = useState<
@@ -58,7 +59,7 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
     if (docSnap.exists()) {
       const userHistoryUpdate = await updateDoc(userRef, {
         // history_multi_chat: arrya(JSON.stringify(currentConversation)),
-        // history_multi_chat: arrayUnion(JSON.stringify(currentConversation)),
+        history_multi_chat: arrayUnion(JSON.stringify(currentConversation)),
       });
     } else {
       const docData = { history_multi_chat: [] };
@@ -105,16 +106,20 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
         currentMessage={systemMessage}
         messageChanger={setSystemMessage}
       /> */}
+      <div className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-3 pr-3 w-fit mb-5 text-xs lowercase rounded-full border border-neutral-900">
+        <AiOutlineInfoCircle />
+        <p>to make sure that your current conversation is recorded, click the reset chat button before leaving.</p>
+      </div>
       <div className="responses rounded-xl h-80 lg:h-96 overflow-scroll">
         {currentConversation.map((x, index) => {
           if (x.role === "user") {
             return (
-              <UserPromptItem username={props.user?.nickname} key={index}>
+              <UserPromptItem username={props.user?.nickname} key={index} variant="chat">
                 {x.content}
               </UserPromptItem>
             );
           } else if (x.role === "assistant") {
-            return <BotResponseItem key={index}>{x.content}</BotResponseItem>;
+            return <BotResponseItem key={index} variant="chat">{x.content}</BotResponseItem>;
           }
         })}
       </div>

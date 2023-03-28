@@ -38,7 +38,7 @@ export default function Home() {
               href="/history/single-chat"
               className="flex flex-row space-x-2 items-center text-xl lg:text-2xl pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-slate-900 transition-colors"
             >
-              <p>single-chat history &#40;old chats&#41;</p>
+              <p>single-chat history &#40;deprecated&#41;</p>
             </Link>
             <Link
               href="/history/multi-chat"

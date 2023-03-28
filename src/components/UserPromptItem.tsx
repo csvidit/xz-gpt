@@ -6,6 +6,7 @@ import ChatItemLabel from "./ChatItemLabel";
 const UserPromptItem = (props: {
   username: string | null | undefined;
   children: any;
+  variant: string
 }) => {
   const username =
     props.username === null || props.username === undefined
@@ -14,7 +15,7 @@ const UserPromptItem = (props: {
 
   return (
     <ChatItemContainer>
-      <ChatItemLabel variant="user" content={username}/>
+      <ChatItemLabel variant="user" type={props.variant} content={username}/>
       <ChatTextContent>{props.children}</ChatTextContent>
     </ChatItemContainer>
   );

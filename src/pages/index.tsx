@@ -19,24 +19,20 @@ import UnderConstructionLandingPage from "@/components/UnderConstructionLandingP
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
-  return <UnderConstructionLandingPage/>
+  // return <UnderConstructionLandingPage/>
 
-  // const { user, error, isLoading } = useUser();
-  // const router = useRouter();
-  // if(isLoading)
-  // {
-  //   return(<Loading/>);
-  // }
-  // // if(user)
-  // // {
-  // //   router.push('/home');
-  // // }
-  // if(user)
-  // {
-  //   return <HomePage/>
-  // }
-  // else
-  // {
-  //   return <LandingPage/>
-  // }
+  const { user, error, isLoading } = useUser();
+  const router = useRouter();
+  if(isLoading)
+  {
+    return(<Loading/>);
+  }
+  if(user)
+  {
+    return <HomePage/>
+  }
+  else
+  {
+    return <LandingPage/>
+  }
 }

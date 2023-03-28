@@ -1,6 +1,9 @@
 import Markdown from "markdown-to-jsx";
+import UserPromptItem from "./UserPromptItem";
+import { Key } from "react";
+import BotResponseItem from "./BotResponseItem";
 
-const MultiChatHistoryItem = (props: {key: any, id: string | null | undefined, label: string, children: any}) => {
+const MultiChatHistoryItem = (props: {key: any, id: any, label: any, children: any}) => {
 
   const labelToDisplay: string = props.label.length > 100 ? props.label.substring(0, 100)+"..." : props.label;
   console.log(props.key);
@@ -22,7 +25,20 @@ const MultiChatHistoryItem = (props: {key: any, id: string | null | undefined, l
             {props.label}
           </h3>
           <p className="py-4">
-            <Markdown>{props.children}</Markdown>
+            {props.children.map((x: { role: string; content: any; }, index: Key | null | undefined) => {
+                if(index === 0)
+                {
+                    return "";
+                }
+                if(x.role === "user")
+                {
+                    return <UserPromptItem variant="history" key={index} username="User">{x.content}</UserPromptItem>
+                }
+                else
+                {
+                    return <BotResponseItem variant="history" key={index}>{x.content}</BotResponseItem>
+                }
+            })}
           </p>
         </div>
       </div>

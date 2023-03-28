@@ -4,10 +4,10 @@ import ChatTextContent from "./ChatTextContent";
 import ChatItemContainer from "./ChatItemContainer";
 import ChatItemLabel from "./ChatItemLabel";
 
-const BotResponseItem = (props: { children: any }) => {
+const BotResponseItem = (props: { children: any , variant: string}) => {
   return (
     <ChatItemContainer>
-      <ChatItemLabel variant="bot" content={undefined}/>
+      <ChatItemLabel variant="bot" type={props.variant} content={undefined}/>
       <ChatTextContent>{props.children}</ChatTextContent>
     </ChatItemContainer>
   );

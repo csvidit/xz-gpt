@@ -45,7 +45,7 @@ export default function UnderConstructionLandingPage() {
         />
       </Head>
       <MainContainer>
-        {/* <Header isAuthenticated={false} /> */}
+        <Header isAuthenticated={false} />
         <MainContent>
           <h1 className="text-4xl lg:text-6xl flex flex-row items-center mt-10 lg:mt-0">
             XZAYVIAN
