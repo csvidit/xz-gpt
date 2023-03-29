@@ -109,7 +109,8 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
         currentMessage={systemMessage}
         messageChanger={setSystemMessage}
       /> */}
-      <div className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-3 pr-3 w-fit mb-5 text-xs lowercase rounded-full border border-neutral-900">
+      {gptModel === "gpt-4-0314" && <div className="flex flex-row space-x-2 items-center px-4 py-1 rounded-full bg-blue-950 text-blue-300 text-lg"><AiOutlineInfoCircle /><p>Congrats, you have access to GPT-4.</p></div>}
+      <div className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-4 pr-4 w-fit mb-5 text-xs lowercase rounded-full border border-neutral-900">
         <AiOutlineInfoCircle />
         <p>to make sure that your current conversation is recorded, click the reset chat button before leaving.</p>
       </div>
