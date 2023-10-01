@@ -5,17 +5,17 @@ import Footer from "@/components/Footer";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
-import Loading from "@/components/Loading";
+import Loading from "@/components/Loading/Loading";
 import { db } from "@/firebase.config";
 import { doc, getDoc } from "@firebase/firestore";
 import { useEffect, useState } from "react";
-import HistoryContainer from "@/components/HistoryContainer";
-import HistoryItem from "@/components/HistoryItem";
-import HistoryContent from "@/components/HistoryContent";
+import HistoryContainer from "@/components/History/HistoryContainer";
+import HistoryItem from "@/components/History/HistoryItem";
+import HistoryContent from "@/components/History/HistoryContent";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import HistoryMultiChatContent from "@/components/HistoryMultiChatContent";
-import UserPromptItem from "@/components/UserPromptItem";
-import MultiChatHistoryItem from "@/components/MultiChatHistoryItem";
+import HistoryMultiChatContent from "@/components/History/HistoryMultiChatContent";
+import UserPromptItem from "@/components/Chat/UserPromptItem";
+import MultiChatHistoryItem from "@/components/History/MultiChatHistoryItem";
 
 export default function Home() {
   const { user, error, isLoading } = useUser();
@@ -56,18 +56,16 @@ export default function Home() {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
         </Head>
-        <MainContainer>
-          <Header isAuthenticated={true} />
-          <HistoryContent>
-            <h1 className="text-2xl lg:text-4xl flex flex-row items-center mt-10 lg:mt-0">
-              Multi-Chat History
-            </h1>
-            <HistoryContainer>
-              <p>No History</p>
-            </HistoryContainer>
-          </HistoryContent>
-          <Footer />
-        </MainContainer>
+
+        <Header isAuthenticated={true} />
+        <HistoryContent>
+          <h1 className="text-2xl lg:text-4xl flex flex-row items-center mt-10 lg:mt-0">
+            Multi-Chat History
+          </h1>
+          <HistoryContainer>
+            <p>No History</p>
+          </HistoryContainer>
+        </HistoryContent>
       </>
     );
   }
@@ -83,31 +81,35 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <MainContainer>
-        <Header isAuthenticated={true} />
-        <HistoryContent>
-          <h1 className="text-2xl lg:text-4xl flex flex-row text-center items-center mt-10 lg:mt-0 text-neutral-900">
-            Multi-Chat History
-          </h1>
-          <HistoryContainer>
-            {history.length > 0
-              ? history?.map((x, index) => {
-                  let arr = JSON.parse(x);
-                  console.log(arr);
-                  if(arr.length > 1)
-                  {
-                    return <MultiChatHistoryItem username={user?.nickname} key={index} id={index} label={arr[1].content}>{arr}</MultiChatHistoryItem>
-                  }
-                  else
-                  {
-                    return "";
-                  }
-                })
-              : "No History"}
-          </HistoryContainer>
-        </HistoryContent>
-        <Footer />
-      </MainContainer>
+
+      <Header isAuthenticated={true} />
+      <HistoryContent>
+        <h1 className="text-2xl lg:text-4xl flex flex-row text-center items-center mt-10 lg:mt-0 text-neutral-900">
+          Multi-Chat History
+        </h1>
+        <HistoryContainer>
+          {history.length > 0
+            ? history?.map((x, index) => {
+                let arr = JSON.parse(x);
+                console.log(arr);
+                if (arr.length > 1) {
+                  return (
+                    <MultiChatHistoryItem
+                      username={user?.nickname}
+                      key={index}
+                      id={index}
+                      label={arr[1].content}
+                    >
+                      {arr}
+                    </MultiChatHistoryItem>
+                  );
+                } else {
+                  return "";
+                }
+              })
+            : "No History"}
+        </HistoryContainer>
+      </HistoryContent>
     </>
   );
 }

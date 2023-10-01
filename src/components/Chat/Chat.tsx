@@ -11,7 +11,7 @@ import {
   updateDoc,
 } from "@firebase/firestore";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import LoadingSmall from "./LoadingSmall";
+import LoadingSmall from "../Loading/LoadingSmall";
 import Markdown from "markdown-to-jsx";
 
 const Chat = (props: { user: UserProfile | undefined }) => {

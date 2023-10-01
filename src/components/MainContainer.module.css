@@ -129,7 +129,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: scroll;
-    font-family: "Gelion", "sans-serif";
+    /* font-family: "Gelion", "sans-serif"; */
   }
 }
 
@@ -138,7 +138,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-attachment: fixed;
-    font-family: "Gelion", "sans-serif";
+    /* font-family: "Gelion", "sans-serif"; */
   }
 }
 

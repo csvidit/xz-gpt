@@ -6,14 +6,15 @@ import Footer from "@/components/Footer";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
-import Chat from "@/components/Chat";
-import Loading from "@/components/Loading";
+import Chat from "@/components/Chat/Chat";
+import Loading from "@/components/Loading/Loading";
 import HomeContent from "@/components/HomeContent";
 import Link from "next/link";
 import { HiLogin } from "react-icons/hi";
 import Markdown from "markdown-to-jsx";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { useEffect, useState } from "react";
+import MainContent from "@/components/MainContent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -60,12 +61,11 @@ export default function Home() {
           content="The Xzayvian chatbot based on OpenAI GPT-3.5 Turbo, a Vidit Khandelwal Project"
         />
       </Head>
-      <MainContainer>
+      {/* <MainContainer> */}
         <Header isAuthenticated={isAuthenticated} />
-        <HomeContent>
-          <h1 className="text-2xl lg:text-4xl mt-10 lg:mt-0">XZAYVIAN</h1>
-          <h1 className="text-2xl lg:text-4xl font-light">GPT</h1>
-          <div className="mt-10 flex flex-col lg:w-3/4 space-y-2 font-sans">
+        <MainContent>
+          <h1 className="text-2xl lg:text-4xl mt-10 lg:mt-0">XZAYVIAN <span className="font-light">GPT</span></h1>
+          <div className="mt-10 flex flex-col lg:w-3/4 space-y-2">
             <p>
               Based on OpenAI&apos;s ChatGPT 3.5 Turbo LLM. Uses the latest
               version of the model through the official API. New users can sign
@@ -114,9 +114,8 @@ export default function Home() {
             </span>
             <p>jump in</p>
           </Link>
-        </HomeContent>
-        <Footer />
-      </MainContainer>
+        </MainContent>
+      {/* </MainContainer> */}
     </>
   );
 }

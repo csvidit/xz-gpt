@@ -6,12 +6,12 @@ import MainContainer from "@/components/MainContainer";
 import MainContent from "@/components/MainContent";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Button from "@/components/Button";
+import Button from "@/components/Buttons/Button";
 import Link from "next/link";
 import { HiLogin } from "react-icons/hi";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from 'next/router'
-import Loading from "@/components/Loading";
+import Loading from "@/components/Loading/Loading";
 import HomePage from "@/components/HomePage";
 import LandingPage from "@/components/LandingPage";
 import UnderConstructionLandingPage from "@/components/UnderConstructionLandingPage";

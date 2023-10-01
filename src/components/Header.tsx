@@ -3,12 +3,12 @@ import Link from "next/link";
 import Image from "next/image";
 import { HiLogin, HiLogout } from "react-icons/hi";
 import { HiQueueList } from "react-icons/hi2";
-import SmallButton from "./SmallButton";
+import SmallButton from "./Buttons/SmallButton"
 
 const Header = (props: { isAuthenticated: boolean }) => {
   if (props.isAuthenticated) {
     return (
-      <motion.div className="z-10 flex flex-row space-x-2 justify-between items-center w-screen h-max text-xl p-2 lg:p-4 lg:text-2xl fixed pl-5 pr-5 lg:pl-10 top-0 backdrop-blur-md bg-neutral-900 bg-opacity-30">
+      <motion.div className="rounded-2xl z-10 flex flex-row space-x-2 justify-between items-center w-full h-max text-xl lg:text-2xl p-5 py-2.5 backdrop-blur-md bg-neutral-900 bg-opacity-20">
         <div className="flex flex-row space-x-2 items-center">
           <Link
             href="/"
@@ -23,20 +23,20 @@ const Header = (props: { isAuthenticated: boolean }) => {
             <span className="text-neutral-200">
               <HiQueueList />
             </span>
-            <p>history</p>
+            <p className="lg:flex hidden">history</p>
           </SmallButton>
           <SmallButton href="/api/auth/logout">
             <span className="text-neutral-200">
               <HiLogout />
             </span>
-            <p>sign out</p>
+            <p className="lg:flex hidden">sign out</p>
           </SmallButton>
         </div>
       </motion.div>
     );
   } else {
     return (
-      <motion.div className="z-10 flex flex-row space-x-2 justify-between items-center w-screen h-max text-xl p-2 lg:p-4 lg:text-2xl fixed pl-5 pr-5 lg:pl-10 top-0 backdrop-blur-md bg-neutral-900 bg-opacity-30">
+      <motion.div className="rounded-2xl z-10 flex flex-row space-x-2 justify-between items-center w-full h-max text-xl lg:text-2xl p-5 py-2.5 backdrop-blur-md bg-neutral-900 bg-opacity-20">
         <div className="flex flex-row space-x-2 items-center">
           <Link
             href="/"
@@ -51,7 +51,7 @@ const Header = (props: { isAuthenticated: boolean }) => {
             <span className="text-neutral-200">
               <HiLogin />
             </span>
-            <p>sign in</p>
+            <p className="lg:flex hidden">sign in</p>
           </SmallButton>
         </div>
       </motion.div>

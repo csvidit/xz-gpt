@@ -5,12 +5,12 @@ import Footer from "@/components/Footer";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
-import Chat from "@/components/Chat";
-import Loading from "@/components/Loading";
+import Chat from "@/components/Chat/Chat";
+import Loading from "@/components/Loading/Loading";
 import HomeContent from "@/components/HomeContent";
 import Link from "next/link";
 import { AiOutlineInfoCircle } from "react-icons/ai";
-import ChatV2 from "./ChatV2";
+import ChatV2 from "./Chat/ChatV2";
 import HomePageTitle from "./HomePageTitle";
 
 export default function HomePage() {
@@ -46,16 +46,11 @@ export default function HomePage() {
           content="The Xzayvian chatbot based on OpenAI GPT-3.5 Turbo, a Vidit Khandelwal Project"
         />
       </Head>
-      <MainContainer>
-        <Header isAuthenticated={true} />
-        <HomeContent>
-          <HomePageTitle user={user}></HomePageTitle>
-          {/* <Chat user={user} /> */}
-          <ChatV2 user={user} />
-        </HomeContent>
-        
-        <Footer />
-      </MainContainer>
+      <Header isAuthenticated={true} />
+      <HomeContent>
+        <HomePageTitle user={user}></HomePageTitle>
+        <ChatV2 user={user} />
+      </HomeContent>
     </>
   );
 }

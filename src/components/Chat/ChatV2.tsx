@@ -1,7 +1,7 @@
 import { openai } from "@/openai.config";
 import Link from "next/link";
 import { SetStateAction, useEffect, useState } from "react";
-import { HiArrowRight, HiArrowUturnLeft } from "react-icons/hi2";
+import { HiArrowRight, HiArrowUturnLeft, HiTrash } from "react-icons/hi2";
 import { db } from "@/firebase.config";
 import {
   arrayUnion,
@@ -11,18 +11,15 @@ import {
   updateDoc,
 } from "@firebase/firestore";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import LoadingSmall from "./LoadingSmall";
+import LoadingSmall from "../Loading/LoadingSmall";
 import UserPromptItem from "./UserPromptItem";
 import BotResponseItem from "./BotResponseItem";
 import SystemMessageItem from "./SystemMessageItem";
-import {
-  ChatCompletionRequestMessage,
-} from "openai";
+import { ChatCompletionRequestMessage } from "openai";
 import ChatV2Container from "./ChatV2Container";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 
 const ChatV2 = (props: { user: UserProfile | undefined }) => {
-  
   const [currentConversation, setCurrentConversation] = useState<
     ChatCompletionRequestMessage[]
   >([
@@ -37,7 +34,10 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [humanize, setHumanize] = useState(false);
 
-  const gptModel = props.user?.sub === process.env.NEXT_PUBLIC_VIDITKHANDELWAL_USER_ID ? "gpt-4-0314" : "gpt-3.5-turbo";
+  const gptModel =
+    props.user?.sub === process.env.NEXT_PUBLIC_VIDITKHANDELWAL_USER_ID
+      ? "gpt-4-0314"
+      : "gpt-3.5-turbo";
 
   //   const [systemMessage, setSystemMessage] = useState(
   //     "This is the system message"
@@ -74,6 +74,10 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
     setCurrentConversation([]);
   };
 
+  const handleDeleteChat = () => {
+    setCurrentConversation([]);
+  };
+
   const generate = async () => {
     console.log(prompt);
     if (prompt == null || prompt == "" || prompt == " ") {
@@ -105,29 +109,28 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
 
   return (
     <ChatV2Container>
-      {/* <SystemMessageItem
-        currentMessage={systemMessage}
-        messageChanger={setSystemMessage}
-      /> */}
-      {gptModel === "gpt-4-0314" && <div className="flex flex-row space-x-2 items-center px-4 py-1 rounded-full bg-blue-950 text-blue-300 text-lg"><AiOutlineInfoCircle /><p>Congrats, you have access to GPT-4.</p></div>}
-      <div className="flex flex-row space-x-2 justify-center items-center pt-1 pb-1 pl-4 pr-4 w-fit mb-5 text-xs lowercase rounded-full border border-neutral-900">
-        <AiOutlineInfoCircle />
-        <p>to make sure that your current conversation is recorded, click the reset chat button before leaving.</p>
-      </div>
-      <div className="responses rounded-xl h-80 lg:h-96 overflow-scroll">
+      <div className="responses rounded-xl overflow-scroll h-80 lg:h-96">
         {currentConversation.map((x, index) => {
           if (x.role === "user") {
             return (
-              <UserPromptItem username={props.user?.nickname} key={index} variant="chat">
+              <UserPromptItem
+                username={props.user?.nickname}
+                key={index}
+                variant="chat"
+              >
                 {x.content}
               </UserPromptItem>
             );
           } else if (x.role === "assistant") {
-            return <BotResponseItem key={index} variant="chat">{x.content}</BotResponseItem>;
+            return (
+              <BotResponseItem key={index} variant="chat">
+                {x.content}
+              </BotResponseItem>
+            );
           }
         })}
       </div>
-      <div className="flex flex-col space-y-2 lg:space-y-4">
+      <div className="flex flex-col space-y-2 lg:space-y-4 w-full">
         <textarea
           className="prompt textarea font-sans text-base p-2 lg:p-4 rounded-xl w-full resize-none bg-slate-900 bg-opacity-10 shadow-md shadow-blue-700 focus:ring-2 focus:border-blue-700 placeholder-blue-700 caret-blue-700"
           placeholder="Write your prompt here..."
@@ -137,10 +140,11 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
         <div className="flex flex-row space-x-4 justify-between items-center">
           <div className="flex flex-row justify-start items-center space-x-4">
             {!isLoading && (
+              // <ButtonSendPrompt onClick={() => generate()}/>
               <button
                 type="button"
                 onClick={() => generate()}
-                className="flex flex-row lg:space-x-2 items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 hover:text-blue-400 transition-colors"
+                className="flex flex-row lg:space-x-2 items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-blue-900 bg-opacity-100 text-neutral-200 hover:bg-neutral-900 hover:text-blue-400 transition-colors"
               >
                 <p className="hidden lg:flex">send prompt</p>
 
@@ -171,18 +175,31 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
               </div>
             )}
           </div>
+          <div className="flex flex-row justify-start items-center space-x-4">
+            {" "}
+            {!isLoading && (
+              <button
+                type="button"
+                onClick={() => handleResetChat()}
+                className="flex flex-row lg:space-x-2 justify-center items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 hover:text-amber-400 transition-colors"
+              >
+                <p className="hidden lg:flex">save and reset chat</p>
 
-          {!isLoading && (
-            <button
-              type="button"
-              onClick={() => handleResetChat()}
-              className="flex flex-row lg:space-x-2 justify-center items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-neutral-900 hover:text-amber-400 transition-colors"
-            >
-              <p className="hidden lg:flex">reset chat</p>
+                <HiArrowUturnLeft />
+              </button>
+            )}
+            {!isLoading && (
+              <button
+                type="button"
+                onClick={() => handleDeleteChat()}
+                className="flex flex-row lg:space-x-2 justify-center items-center pt-1 pb-1 pl-4 pr-4 w-fit lowercase rounded-full bg-transparent bg-opacity-50 border border-red-500 text-red-500 hover:bg-neutral-900 hover:border-neutral-900 transition-colors"
+              >
+                <p className="hidden lg:flex">delete chat</p>
 
-              <HiArrowUturnLeft />
-            </button>
-          )}
+                <HiTrash />
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </ChatV2Container>

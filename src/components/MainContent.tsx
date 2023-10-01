@@ -1,6 +1,6 @@
 const MainContent = (props: { children: any }) => {
   return (
-    <div className="w-screen min-h-screen h-full flex flex-col bg-transparent justify-center items-center p-5 lg:p-10 mt-10 text-neutral-900">
+    <div className="w-full h-full min-h-screen flex flex-col space-y-5 bg-transparent justify-center items-center text-neutral-900">
       {props.children}
     </div>
   );

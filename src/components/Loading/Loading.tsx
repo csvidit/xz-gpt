@@ -1,6 +1,6 @@
 import { ThreeDots } from "react-loader-spinner";
-import MainContainer from "./MainContainer";
-import MainContent from "./MainContent";
+import MainContainer from "../MainContainer";
+import MainContent from "../MainContent";
 
 const Loading = () => {
   return (
