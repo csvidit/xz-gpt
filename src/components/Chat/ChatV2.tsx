@@ -8,7 +8,7 @@ import {
   getDoc,
   setDoc,
   updateDoc,
-} from "@firebase/firestore";
+} from "firebase/firestore";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
 import LoadingSmall from "../Loading/LoadingSmall";
 import UserPromptItem from "./UserPromptItem";

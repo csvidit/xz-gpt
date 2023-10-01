@@ -5,7 +5,7 @@ import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
 import Loading from "@/components/Loading/Loading";
 import { db } from "@/firebase.config";
-import { doc, getDoc } from "@firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import HistoryContainer from "@/components/History/HistoryContainer";
 import HistoryItem from "@/components/History/HistoryItem";
