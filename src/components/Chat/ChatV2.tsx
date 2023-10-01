@@ -1,5 +1,4 @@
 import { openai } from "@/openai.config";
-import Link from "next/link";
 import { SetStateAction, useEffect, useState } from "react";
 import { HiArrowRight, HiArrowUturnLeft, HiTrash } from "react-icons/hi2";
 import { db } from "@/firebase.config";
@@ -14,10 +13,8 @@ import { UserProfile } from "@auth0/nextjs-auth0/client";
 import LoadingSmall from "../Loading/LoadingSmall";
 import UserPromptItem from "./UserPromptItem";
 import BotResponseItem from "./BotResponseItem";
-import SystemMessageItem from "./SystemMessageItem";
 import { ChatCompletionRequestMessage } from "openai";
 import ChatV2Container from "./ChatV2Container";
-import { AiOutlineInfoCircle } from "react-icons/ai";
 
 const ChatV2 = (props: { user: UserProfile | undefined }) => {
   const [currentConversation, setCurrentConversation] = useState<
@@ -99,11 +96,11 @@ const ChatV2 = (props: { user: UserProfile | undefined }) => {
       });
       newConversation.push({
         role: "assistant",
-        content: completion!.data!.choices[0]!.message!.content,
+        content: completion!.data!.choices[0]!.message!.content!,
       });
       setCurrentConversation(newConversation);
       setIsLoading(false);
-      setResponse(completion!.data!.choices[0]!.message!.content);
+      setResponse(completion!.data!.choices[0]!.message!.content!);
     }
   };
 

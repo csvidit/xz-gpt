@@ -1,8 +1,5 @@
 import Head from "next/head";
-import Image from "next/image";
-import MainContainer from "@/components/MainContainer";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 import Loading from "@/components/Loading/Loading";

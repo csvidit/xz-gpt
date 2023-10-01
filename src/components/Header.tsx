@@ -1,9 +1,8 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { HiLogin, HiLogout } from "react-icons/hi";
 import { HiQueueList } from "react-icons/hi2";
-import SmallButton from "./Buttons/SmallButton"
+import SmallButton from "./Buttons/SmallButton";
 
 const Header = (props: { isAuthenticated: boolean }) => {
   if (props.isAuthenticated) {
