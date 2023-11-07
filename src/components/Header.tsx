@@ -1,18 +1,21 @@
-import { motion } from "framer-motion";
+'use client'
+
 import Link from "next/link";
 import { HiLogin, HiLogout } from "react-icons/hi";
 import { HiQueueList } from "react-icons/hi2";
 import SmallButton from "./Buttons/SmallButton";
+import { Session, getSession } from "@auth0/nextjs-auth0";
+import { NextRequest, NextResponse } from "next/server";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
-const Header = (props: { isAuthenticated: boolean }) => {
-  if (props.isAuthenticated) {
+export default function Header() {
+  const { user, isLoading, error } = useUser();
+
+  if (user) {
     return (
-      <motion.div className="rounded-2xl z-10 flex flex-row space-x-2 justify-between items-center w-full h-max text-xl lg:text-2xl p-5 py-2.5 backdrop-blur-md bg-neutral-900 bg-opacity-20">
+      <div className="rounded-2xl z-10 flex flex-row space-x-2 justify-between items-center w-full h-max text-xl lg:text-2xl p-5 py-2.5 backdrop-blur-md bg-neutral-900 bg-opacity-20">
         <div className="flex flex-row space-x-2 items-center">
-          <Link
-            href="/"
-            className="flex flex-row space-x-1 text-neutral-900"
-          >
+          <Link href="/" className="flex flex-row space-x-1 text-neutral-900">
             <p className="">XZAYVIAN</p>
             <p className="font-light">GPT</p>
           </Link>
@@ -31,16 +34,13 @@ const Header = (props: { isAuthenticated: boolean }) => {
             <p className="lg:flex hidden">sign out</p>
           </SmallButton>
         </div>
-      </motion.div>
+      </div>
     );
   } else {
     return (
-      <motion.div className="rounded-2xl z-10 flex flex-row space-x-2 justify-between items-center w-full h-max text-xl lg:text-2xl p-5 py-2.5 backdrop-blur-md bg-neutral-900 bg-opacity-20">
+      <div className="rounded-2xl z-10 flex flex-row space-x-2 justify-between items-center w-full h-max text-xl lg:text-2xl p-5 py-2.5 backdrop-blur-md bg-neutral-900 bg-opacity-20">
         <div className="flex flex-row space-x-2 items-center">
-          <Link
-            href="/"
-            className="flex flex-row space-x-1 text-neutral-900"
-          >
+          <Link href="/" className="flex flex-row space-x-1 text-neutral-900">
             <p className="">XZAYVIAN</p>
             <p className="font-light">GPT</p>
           </Link>
@@ -53,9 +53,7 @@ const Header = (props: { isAuthenticated: boolean }) => {
             <p className="lg:flex hidden">sign in</p>
           </SmallButton>
         </div>
-      </motion.div>
+      </div>
     );
   }
-};
-
-export default Header;
+}

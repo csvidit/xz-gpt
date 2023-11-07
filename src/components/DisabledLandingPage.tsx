@@ -1,54 +1,62 @@
-import Head from "next/head";
-import Header from "@/components/Header";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import { useRouter } from "next/router";
-import Loading from "@/components/Loading/Loading";
-import Link from "next/link";
-import { HiLogin } from "react-icons/hi";
+"use client";
+
+import { motion } from "framer-motion";
 import MainContent from "./MainContent";
-import { AiOutlineInfoCircle } from "react-icons/ai";
+import PrimaryLink from "./Links/PrimaryLink";
 
-export default function DisabledLandingPage() {
-  const { user, error, isLoading } = useUser();
-  const router = useRouter();
-  if (isLoading) {
-    return <Loading />;
-  }
+const LandingPage = () => {
   return (
-    <>
-      <Head>
-        <title>Xzayvian GPT</title>
-        <meta
-          name="description"
-          content="The Xzayvian chatbot based on OpenAI GPT-3.5 Turbo, a Vidit Khandelwal Project"
-        />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="author" content="Vidit Khandelwal" />
-        <meta
-          name="keywords"
-          content="Vidit Khandelwal, DePauw University, DePauw, CS, computer science, openai, chatgpt, gpt-3.5, gpt, turbo, xz, xzayvian"
-        />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="robots" content="all" />
+    <MainContent>
+      <motion.h1
+        animate={{ opacity: 1, translateY: 0 }}
+        initial={{ opacity: 0, translateY: 0 }}
+        transition={{ type: "spring" }}
+        className="flex flex-col lg:flex-row justify-center items-center lg:space-x-2 font-semibold text-4xl lg:text-6xl"
+      >
+        <p className="extended">XZAYVIAN</p>
+      </motion.h1>
+      <motion.h2
+        animate={{ opacity: 1, translateY: 0 }}
+        initial={{ opacity: 0, translateY: 0 }}
+        transition={{ type: "spring" }}
+        className="flex flex-col lg:flex-row justify-center items-center lg:space-x-2 text-xl lg:text-2xl extended"
+      >
+        VERSION 2 / MULTIMODAL
+      </motion.h2>
+      <motion.p
+        animate={{ opacity: 1, translateY: 0 }}
+        initial={{ opacity: 0, translateY: 0 }}
+        transition={{
+          type: "spring",
+        }}
+        className="flex flex-row space-x-2 items-center text-base mt-10 justify-center"
+      >
+        Xzayvian is currently undergoing UI, performance, feature, and security
+        upgrades. Please check back later.
+      </motion.p>
+      <motion.div
+        className="mt-10"
+        animate={{ opacity: 1, translateY: 0 }}
+        initial={{ opacity: 0, translateY: 0 }}
+        transition={{
+          type: "spring",
+        }}
+      >
+        <PrimaryLink type="nonfocus" href="/api/auth/login">
+          Log In / Sign Up
+        </PrimaryLink>
+      </motion.div>
 
-        <meta property="og:title" content="Xzayvian GPT" />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content="/dddepth-144.webp" />
-        <meta property="og:url" content="https://xz.viditkhandelwal.com" />
-        <meta property="og:site_name" content="Xzayvian GPT" />
-        <meta
-          property="description"
-          content="The Xzayvian chatbot based on OpenAI GPT-3.5 Turbo, a Vidit Khandelwal Project"
-        />
-      </Head>
-      <MainContent>
-        <h1 className="text-4xl lg:text-6xl flex flex-row items-center mt-10 lg:mt-0">
-          XZAYVIAN
-        </h1>
-        <h1 className="text-4xl lg:text-6xl font-light">GPT</h1>
-        <p className="text-xl lg:text-2xl">Based on OpenAI GPT-3.5-Turbo LLM</p>
-        <div className="pt-1 pb-1 pl-3 pr-3 text-2xl lg:text-2xl">Due to a security vulnerability, Xzayvian GPT is currently offline.</div>
-      </MainContent>
-    </>
+      {/* <motion.p
+          animate={{ opacity: 1 }}
+          initial={{ opacity: 0 }}
+          transition={{ delay: 0.2 }}
+          className="absolute bottom-20 text-xs text-center "
+        >
+          *bring your own key
+        </motion.p> */}
+    </MainContent>
   );
-}
+};
+
+export default LandingPage;

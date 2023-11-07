@@ -4,7 +4,7 @@ import { BsCodeSquare, BsDot } from "react-icons/bs";
 
 const Footer = () => {
   return (
-    <footer className="p-5 py-2.5 rounded-2xl flex flex-col space-y-2 self-end items-end bg-neutral-900 bg-opacity-20 w-full text-neutral-900 overflow-hidden">
+    <footer className="p-5 py-2.5 border border-white flex flex-col space-y-2 self-end items-end bg-neutral-950 w-full overflow-hidden">
       <div className="flex flex-row space-x-2 items-center font-extralight">
         <p className="text-2xl">&copy; 2023 VIDIT KHANDELWAL</p>
       </div>
