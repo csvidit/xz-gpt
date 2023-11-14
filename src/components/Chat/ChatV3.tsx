@@ -123,7 +123,7 @@ const ChatV3 = (props: { user: UserProfile | undefined }) => {
           }
         })}
       </div>
-      <div className="flex flex-col space-y-2 lg:space-y-4 w-full fixed bottom-0 left-0 bg-violet-600 border-t border-t-violet-700 bg-opacity-10 backdrop-blur-md px-5 py-2.5 lg:px-10 lg:py-5">
+      <div className="flex flex-col space-y-2 lg:space-y-4 w-9/12 fixed bottom-0 right-0 bg-neutral-900 bg-opacity-40 border-t border-r border-neutral-800 backdrop-blur-md px-5 py-2.5 lg:px-10 lg:py-5">
         <div className="flex flex-row space-x-4 items-center w-full h-full">
           <textarea
             className="textarea w-5/6 text-neutral-100 max-h-64 text-base p-2 lg:p-4 rounded-md resize-none bg-neutral-900 border border-neutral-800 bg-opacity-80 shadow-md focus:ring-offset focus:ring-offset-violet-500 focus:ring-opacity-40 focus:border-violet-500 placeholder-violet-500 caret-neutral-400"
@@ -218,3 +218,5 @@ const ChatV3 = (props: { user: UserProfile | undefined }) => {
 };
 
 export default ChatV3;
+
+// bg-violet-600 border-t border-t-violet-700 bg-opacity-10

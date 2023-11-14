@@ -47,7 +47,7 @@ const HistoryPanelItem = () => {
                 layout
                 className="px-5 lg:px-10 absolute left-0 z-10 flex flex-row space-x-2 items-center text-violet-400 bg-neutral-950 rounded-md w-full h-full p-2 backdrop-blur-md bg-opacity-60"
               >
-                <motion.div>Open Chat</motion.div>
+                <motion.div className="p-2">Open Chat</motion.div>
                 <PiArrowRight/>
               </motion.div>
             </AnimatePresence>

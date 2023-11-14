@@ -27,4 +27,3 @@ export default function HomePage() {
   );
 }
 
-export const getServerSideProps = withPageAuthRequired();

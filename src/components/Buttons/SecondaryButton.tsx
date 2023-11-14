@@ -56,7 +56,7 @@ const SecondaryButton = (props: {
         variants={mainDivVariants}
         whileHover="hover"
         initial="initial"
-        className={`flex flex-row space-x-2 items-center text-white border border-white bg-white bg-opacity-10 hover:bg-opacity-100 hover:text-black backdrop-blur-md transition ease-in-out`}
+        className={`rounded-md w-fit flex flex-row space-x-2 items-center text-white border border-white bg-white bg-opacity-10 hover:bg-opacity-100 hover:text-black backdrop-blur-md transition ease-in-out`}
       >
         <motion.button
           className="flex flex-row space-x-2 items-center w-max h-full px-2 py-1 overflow-hidden text-sm"
