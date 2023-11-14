@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Header from "@/components/Header";
+import Header from "@/components/Header/Header";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import HistoryContent from "@/components/History/HistoryContent";
 import Link from "next/link";
@@ -17,7 +17,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header isAuthenticated={true} />
+      <Header/>
       <HistoryContent>
         <h1 className="text-2xl lg:text-4xl flex flex-row items-center mt-10 lg:mt-0">
           HISTORY
@@ -40,5 +40,3 @@ export default function Home() {
     </>
   );
 }
-
-export const getServerSideProps = withPageAuthRequired();

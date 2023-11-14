@@ -1,16 +1,15 @@
-import Header from "@/components/Header";
+import Header from "@/components/Header/Header";
 import Link from "next/link";
 import { HiLogin } from "react-icons/hi";
 import MainContent from "@/components/MainContent";
+import PrimaryLink from "@/components/Links/PrimaryLink";
 
 export default function Home() {
-
   return (
     <>
-      <Header/>
       <MainContent>
-        <h1 className="text-2xl lg:text-4xl mt-10 lg:mt-0">
-          XZAYVIAN <span className="font-light">GPT</span>
+        <h1 className="text-2xl lg:text-4xl mt-10 lg:mt-0 extended">
+          XZAYVIAN GPT
         </h1>
         <div className="mt-10 flex flex-col lg:w-3/4 space-y-2">
           <p>
@@ -51,15 +50,9 @@ export default function Home() {
             the derivative project &quot;Xzayvian.&quot;
           </p>
         </div>
-        <Link
-          href="/api/auth/login"
-          className="flex flex-row space-x-2 items-center text-xl lg:text-2xl mt-10 pt-1 pb-1 pl-3 pr-3 w-fit lowercase rounded-full bg-neutral-900 bg-opacity-50 text-neutral-200 hover:bg-slate-900"
-        >
-          <span className="text-neutral-200">
-            <HiLogin />
-          </span>
-          <p>jump in</p>
-        </Link>
+        <PrimaryLink type="nonfocus" href="/api/auth/login">
+          Login / Signup
+        </PrimaryLink>
       </MainContent>
     </>
   );

@@ -2,7 +2,7 @@ import "./globals.css";
 import { Metadata } from "next";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
 import MainContainer from "@/components/MainContainer";
-import Header from "@/components/Header";
+import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -40,7 +40,6 @@ export default function RootLayout({
           <MainContainer>
             <Header />
             {children}
-            <Footer />
           </MainContainer>
         </body>
       </UserProvider>

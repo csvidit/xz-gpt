@@ -1,7 +1,7 @@
 "use client";
 
 import Head from "next/head";
-import Header from "@/components/Header";
+import Header from "@/components/Header/Header";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
@@ -13,7 +13,7 @@ import HistoryContainer from "@/components/History/HistoryContainer";
 import HistoryContent from "@/components/History/HistoryContent";
 import MultiChatHistoryItem from "@/components/History/MultiChatHistoryItem";
 
-export default withPageAuthRequired(function Home() {
+export default function Home() {
   const { user, error, isLoading } = useUser();
   const [history, setHistory] = useState([]);
   const router = useRouter();
@@ -86,4 +86,4 @@ export default withPageAuthRequired(function Home() {
       </HistoryContent>
     </>
   );
-});
+}

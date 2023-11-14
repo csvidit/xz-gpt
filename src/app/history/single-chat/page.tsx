@@ -1,7 +1,7 @@
 "use client";
 
 import Head from "next/head";
-import Header from "@/components/Header";
+import Header from "@/components/Header/Header";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import { useRouter } from "next/router";
