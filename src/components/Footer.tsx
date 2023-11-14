@@ -1,10 +1,9 @@
 import Link from "next/link";
 import { HiArrowUpRight } from "react-icons/hi2";
-import { BsCodeSquare, BsDot } from "react-icons/bs";
 
 const Footer = () => {
   return (
-    <footer className="p-5 py-2.5 border border-white flex flex-col space-y-2 self-end items-end bg-neutral-950 w-full overflow-hidden">
+    <footer className="rounded-md bg-neutral-900 bg-opacity-40 border-neutral-800 p-5 py-2.5 border flex flex-col space-y-2 self-end items-end bg-neutral-950 w-full h-max">
       <div className="flex flex-row space-x-2 items-center font-extralight">
         <p className="text-2xl">&copy; 2023 VIDIT KHANDELWAL</p>
       </div>

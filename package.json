@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^2.2.2",
+    "@auth0/nextjs-auth0": "^3.3.0",
     "@firebase/firestore": "^4.2.0",
     "@types/node": "18.14.4",
     "@types/react": "18.0.28",
@@ -19,7 +19,7 @@
     "firebase": "^9.17.2",
     "framer-motion": "^10.0.1",
     "markdown-to-jsx": "^7.1.9",
-    "next": "^14.0.1",
+    "next": "^14.0.2",
     "openai": "^3.2.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

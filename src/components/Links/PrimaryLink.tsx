@@ -8,7 +8,7 @@ import { AnimatePresence, MotionConfig, motion } from "framer-motion";
 const PrimaryLink = (props: {
   children: any;
   type: string; // focus or nonfocus
-  href: UrlObject | string;
+  href: string;
   external?: boolean;
 }) => {
 
@@ -25,14 +25,14 @@ const PrimaryLink = (props: {
     hover: {
       display: "none",
       opacity: 0,
-      translateY: "-200%",
+      translateY: "-100%",
     },
   };
   const textVariants2 = {
     initial: {
       display: "none",
       opacity: 0,
-      translateY: "+200%",
+      translateY: "+100%",
     },
     hover: {
       display: "flex",
@@ -48,7 +48,7 @@ const PrimaryLink = (props: {
         variants={mainDivVariants}
         whileHover="hover"
         initial="initial"
-        className={`flex flex-row space-x-2 items-center text-neutral-100 border-2 border-neutral-100 bg-neutral-100 bg-opacity-10 hover:bg-opacity-100 hover:text-black backdrop-blur-md hover:transform hover:scale-105 transition ease-in-out`}
+        className={`rounded-md flex flex-row space-x-2 items-center text-neutral-100 border-2 border-neutral-100 bg-neutral-100 bg-opacity-10 hover:bg-opacity-100 hover:text-black backdrop-blur-md hover:transform hover:scale-105 transition ease-in-out`}
       >
         <Link
           className="flex flex-row space-x-2 items-center w-max h-full p-2 lg:p-4 overflow-hidden"

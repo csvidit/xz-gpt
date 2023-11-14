@@ -9,7 +9,7 @@ const SecondaryLink = (props: {
   children: any;
   external?: boolean;
   type: string; // focus or nonfocus
-  href: UrlObject | string;
+  href: string;
 }) => {
   let icon;
 
@@ -57,7 +57,7 @@ const SecondaryLink = (props: {
         variants={mainDivVariants}
         whileHover="hover"
         initial="initial"
-        className={`flex flex-row space-x-2 items-center text-white border border-white bg-white bg-opacity-10 hover:bg-opacity-100 hover:text-black backdrop-blur-md transition ease-in-out`}
+        className={`rounded-md flex flex-row space-x-2 items-center text-white border border-white bg-white bg-opacity-10 hover:bg-opacity-100 hover:text-black backdrop-blur-md transition ease-in-out`}
       >
         <Link
           className="flex flex-row space-x-2 items-center w-max h-full px-2 py-1 overflow-hidden text-sm"

@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Xzayvian Visual GPT",
+  title: "Xzayvian AI",
   description: `Vidit Khandelwal's link-in-bio page. He is a software engineer based in the United States.`,
   generator: "Next.js",
   keywords: [
@@ -34,13 +34,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html>
       <UserProvider>
-        <MainContainer>
-          <Header/>
-          <body className={``}>{children}</body>
-          <Footer/>
-        </MainContainer>
+        <body>
+          <MainContainer>
+            <Header />
+            {children}
+            <Footer />
+          </MainContainer>
+        </body>
       </UserProvider>
     </html>
   );

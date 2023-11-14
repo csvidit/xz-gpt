@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  trailingSlash: false
+  // trailingSlash: false
 }
 
 module.exports = nextConfig
