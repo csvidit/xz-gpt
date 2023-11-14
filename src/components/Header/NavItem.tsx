@@ -43,14 +43,14 @@ const NavItem = (props: {
       borderTopColor: "#f5f5f5",
       display: "flex",
       opacity: 0,
-      translate: "100%",
+      translateX: "+100%",
       scale: 0,
     },
     hover: {
       borderTopColor: "#a3a3a3",
       display: "flex",
       opacity: 1,
-      translate: "0%",
+      translateX: "0%",
       scale: 1,
     },
   };

@@ -50,9 +50,6 @@ export default function Home() {
             the derivative project &quot;Xzayvian.&quot;
           </p>
         </div>
-        <PrimaryLink type="nonfocus" href="/api/auth/login">
-          Login / Signup
-        </PrimaryLink>
       </MainContent>
     </>
   );

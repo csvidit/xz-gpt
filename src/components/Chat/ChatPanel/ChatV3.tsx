@@ -4,15 +4,23 @@ import { HiArrowRight, HiArrowUturnLeft, HiTrash } from "react-icons/hi2";
 import { db } from "@/firebase.config";
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { UserProfile } from "@auth0/nextjs-auth0/client";
-import LoadingSmall from "../Loading/LoadingSmall";
-import UserPromptItem from "./UserPromptItem";
-import BotResponseItem from "./BotResponseItem";
+import LoadingSmall from "../../Loading/LoadingSmall";
+import UserPromptItem from "../UserPromptItem";
+import BotResponseItem from "../BotResponseItem";
 import { ChatCompletionRequestMessage } from "openai";
-import ChatV2Container from "./ChatV2Container";
-import ChatV3Container from "./ChatV3Container";
+import ChatV2Container from "../ChatV2Container";
+import ChatV3Container from "../ChatV3Container";
 import { PiArrowRight, PiArrowRightFill, PiTrashDuotone } from "react-icons/pi";
+import Button from "@/components/Buttons/Button";
+import ButtonSendPrompt from "./Input/ButtonSendPrompt";
+import HumanizeToggle from "./Input/HumanizeToggle";
+import ButtonDeleteChat from "./Input/ButtonDeleteChat";
+import ButtonAddFile from "./Input/ButtonAddFile";
 
-const ChatV3 = (props: { user: UserProfile | undefined }) => {
+const ChatV3 = (props: {
+  showHistory: boolean;
+  user: UserProfile | undefined;
+}) => {
   const [currentConversation, setCurrentConversation] = useState<
     ChatCompletionRequestMessage[]
   >([
@@ -123,10 +131,15 @@ const ChatV3 = (props: { user: UserProfile | undefined }) => {
           }
         })}
       </div>
-      <div className="flex flex-col space-y-2 lg:space-y-4 w-9/12 fixed bottom-0 right-0 bg-neutral-900 bg-opacity-40 border-t border-r border-neutral-800 backdrop-blur-md px-5 py-2.5 lg:px-10 lg:py-5">
+      <div
+        className={`flex flex-col space-y-2 lg:space-y-4 w-9/12 fixed bottom-0 right-0 bg-neutral-900 bg-opacity-40 border-neutral-800 backdrop-blur-md p-2 lg:p-4 ${
+          props.showHistory ? "border-t" : "border-t border-l rounded-tl-md"
+        }`}
+      >
         <div className="flex flex-row space-x-4 items-center w-full h-full">
           <textarea
-            className="textarea w-5/6 text-neutral-100 max-h-64 text-base p-2 lg:p-4 rounded-md resize-none bg-neutral-900 border border-neutral-800 bg-opacity-80 shadow-md focus:ring-offset focus:ring-offset-violet-500 focus:ring-opacity-40 focus:border-violet-500 placeholder-violet-500 caret-neutral-400"
+            spellCheck="false"
+            className="textarea w-5/6 text-neutral-100 h-20 text-base p-2 lg:p-4 rounded-md resize-none bg-neutral-900 border border-neutral-800 bg-opacity-80 shadow-md focus:ring-offset focus:ring-offset-violet-500 focus:ring-opacity-40 focus:border-violet-500 placeholder-violet-500 caret-neutral-400 selection:bg-neutral-600"
             placeholder="Write your prompt here..."
             onChange={handlePromptChange}
             onKeyDown={(e) => {
@@ -136,44 +149,27 @@ const ChatV3 = (props: { user: UserProfile | undefined }) => {
             }}
             value={prompt}
           ></textarea>
-          <input
-            placeholder="Upload File"
-            type="file"
-            className="flex flex-col space-y-2 h-max w-1/6 resize-none rounded-md p-2 lg:p-4 bg-neutral-900 border border-neutral-800 bg-opacity-80 shadow-md focus:ring-offset focus:ring-offset-violet-500 focus:ring-opacity-40 focus:border-violet-500 placeholder-violet-500"
-          ></input>
+          <ButtonAddFile />
         </div>
         <div className="flex flex-row space-x-4 justify-between items-center">
           <div className="flex flex-row justify-start items-center space-x-4">
             {!isLoading && (
-              // <ButtonSendPrompt onClick={() => generate()}/>
-              <div className="group w-fit h-fit p-[0.75px] rounded-md bg-gradient-to-tr from-violet-700 to-violet-100 via-violet-400 from-60% flex flex-row items-center">
-                <button
-                  type="button"
-                  onClick={() => generate()}
-                  className="px-4 py-1 flex flex-row lg:space-x-2 items-center w-full h-fulllowercase rounded-md bg-gradient-to-b from-violet-950 to-violet-700 hover:shadow-inner hover:shadow-violet-500 transition-all duration-200 ease-in-out text-neutral-100"
-                >
-                  <p className="hidden lg:flex">send prompt</p>
-                  <PiArrowRightFill className="hidden group-hover:flex"/>
-                  <PiArrowRight className="flex group-hover:hidden" />
-                </button>
+              <div className="group w-fit h-fit p-[0.1rem] rounded-md bg-gradient-to-tr from-neutral-700 to-neutral-50 via-neutral-400 from-60% flex flex-row items-center">
+                <ButtonSendPrompt
+                  onClick={() => {
+                    generate();
+                  }}
+                />
               </div>
             )}
 
             {!isLoading && (
-              <div className="form-control">
-                <label className="cursor-pointer label flex-row space-x-1 items-center">
-                  <span className="label-text text-neutral-100 text-base">
-                    humanize?
-                  </span>
-                  <input
-                    data-theme="dracula"
-                    type="checkbox"
-                    className="toggle toggle-primary bg-neutral-200 checked:bg-violet-500"
-                    onChange={() => setHumanize(!humanize)}
-                    checked={humanize}
-                  />
-                </label>
-              </div>
+              <HumanizeToggle
+                onChange={(event) => {
+                  handleHumanizeChange(event);
+                }}
+                checked={humanize}
+              />
             )}
             {isLoading && (
               <div className="flex flex-row space-x-2 items-center px-4 py-1 w-fit lowercase rounded-md border border-neutral-900">
@@ -183,29 +179,7 @@ const ChatV3 = (props: { user: UserProfile | undefined }) => {
             )}
           </div>
           <div className="flex flex-row justify-start items-center space-x-4">
-            {" "}
-            {!isLoading && (
-              <button
-                type="button"
-                onClick={() => handleResetChat()}
-                className="flex flex-row lg:space-x-2 justify-center items-center px-4 py-1 w-fit lowercase rounded-md bg-neutral-900 bg-opacity-60 text-neutral-100 hover:bg-opacity-100 hover:text-amber-400 transition-colors"
-              >
-                <p className="hidden lg:flex">save and reset chat</p>
-
-                <HiArrowUturnLeft />
-              </button>
-            )}
-            {!isLoading && (
-              <button
-                type="button"
-                onClick={() => handleDeleteChat()}
-                className="flex flex-row lg:space-x-2 justify-center items-center px-4 py-1 w-fit lowercase rounded-md bg-transparent bg-opacity-50 border border-red-500 text-red-500 hover:bg-neutral-900 hover:border-red-900 transition-colors"
-              >
-                <p className="hidden lg:flex">delete chat</p>
-
-                <PiTrashDuotone />
-              </button>
-            )}
+            {!isLoading && <ButtonDeleteChat chatId={props.user?.sub!} />}
           </div>
         </div>
         <p className="text-violet-400 text-xs">

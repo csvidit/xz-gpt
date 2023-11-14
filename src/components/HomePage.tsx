@@ -1,28 +1,23 @@
-import Head from "next/head";
-import MainContainer from "@/components/MainContainer";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer";
+"use client"
+
 import { useUser } from "@auth0/nextjs-auth0/client";
-import { withPageAuthRequired } from "@auth0/nextjs-auth0";
-import { useRouter } from "next/router";
 import Loading from "@/components/Loading/Loading";
 import HomeContent from "@/components/HomeContent";
-import Link from "next/link";
-import { AiOutlineInfoCircle } from "react-icons/ai";
-import ChatV2 from "./Chat/ChatV2";
-import HomePageTitle from "./HomePageTitle";
-import ChatV3 from "./Chat/ChatV3";
+import ChatV3 from "./Chat/ChatPanel/ChatV3";
 import HistoryPanel from "./Chat/HistoryPanel/HistoryPanel";
+import { useState } from "react";
 
 export default function HomePage() {
+  const [showHistory, setShowHistory] = useState(false);
+
   const { user, error, isLoading } = useUser();
   if (isLoading) {
     return <Loading />;
   }
   return (
     <HomeContent>
-      <HistoryPanel user={user}></HistoryPanel>
-      <ChatV3 user={user} />
+      <HistoryPanel showHistory={showHistory} setShowHistory={setShowHistory} user={user}></HistoryPanel>
+      <ChatV3 showHistory={showHistory} user={user} />
     </HomeContent>
   );
 }

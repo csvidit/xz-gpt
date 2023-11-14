@@ -74,7 +74,7 @@ const SecondaryButton = (props: {
               </motion.div>
             </AnimatePresence>
           </motion.div>
-          <motion.div className="flex flex-col overflow-hidden">
+          {/* <motion.div className="flex flex-col overflow-hidden">
             <AnimatePresence mode="popLayout">
               <motion.div layout variants={textVariants1} className="flex">
                 {icon}
@@ -85,7 +85,7 @@ const SecondaryButton = (props: {
                 {icon}
               </motion.div>
             </AnimatePresence>
-          </motion.div>
+          </motion.div> */}
         </motion.button>
       </motion.div>
     </MotionConfig>

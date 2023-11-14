@@ -30,7 +30,7 @@ const HistoryPanelItem = () => {
       <motion.div
         initial="initial"
         whileHover="hover"
-        className="px-5 lg:px-10 relative text-sm flex flex-row items-center bg-neutral-900 bg-opacity-10 border-b border-violet-800 hover:border-violet-700 transition-all duration-200"
+        className="px-5 lg:px-10 relative text-sm flex flex-row items-center bg-neutral-900 bg-opacity-10 border-b border-neutral-800 hover:border-violet-700 transition-all duration-200"
       >
         <Link href="/" className="w-full h-full">
           <motion.div
