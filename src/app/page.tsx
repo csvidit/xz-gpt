@@ -7,13 +7,15 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import React from "react";
 
 const Index = () => {
-  const { user, error, isLoading } = useUser();
+  // const { user, error, isLoading } = useUser();
 
-  if (user) {
-    return <HomePage />;
-  } else {
-    return <LandingPage />;
-  }
+  // if (user) {
+  //   return <HomePage />;
+  // } else {
+  //   return <LandingPage />;
+  // }
+
+  return <DisabledLandingPage />;
 };
 
 export default Index;

@@ -14,7 +14,7 @@ const UserPromptItem = (props: {
       : props.username;
 
   return (
-    <ChatItemContainer>
+    <ChatItemContainer variant="user">
       <ChatItemLabel variant="user" type={props.variant} content={username}/>
       <ChatTextContent>{props.children}</ChatTextContent>
     </ChatItemContainer>

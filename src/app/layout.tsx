@@ -4,6 +4,7 @@ import { UserProvider } from "@auth0/nextjs-auth0/client";
 import MainContainer from "@/components/MainContainer";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer";
+import DisabledHeader from "@/components/Header/DisabledHeader";
 
 export const metadata: Metadata = {
   title: "Xzayvian AI",
@@ -38,7 +39,7 @@ export default function RootLayout({
       <UserProvider>
         <body>
           <MainContainer>
-            <Header />
+            <DisabledHeader/>
             {children}
           </MainContainer>
         </body>

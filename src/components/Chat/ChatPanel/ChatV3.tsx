@@ -8,14 +8,14 @@ import LoadingSmall from "../../Loading/LoadingSmall";
 import UserPromptItem from "../UserPromptItem";
 import BotResponseItem from "../BotResponseItem";
 import { ChatCompletionRequestMessage } from "openai";
-import ChatV2Container from "../ChatV2Container";
-import ChatV3Container from "../ChatV3Container";
 import { PiArrowRight, PiArrowRightFill, PiTrashDuotone } from "react-icons/pi";
 import Button from "@/components/Buttons/Button";
 import ButtonSendPrompt from "./Input/ButtonSendPrompt";
 import HumanizeToggle from "./Input/HumanizeToggle";
 import ButtonDeleteChat from "./Input/ButtonDeleteChat";
 import ButtonAddFile from "./Input/ButtonAddFile";
+import ResponsesContainer from "../ResponsesContainer";
+import ResponseLoading from "./Input/ResponseLoading";
 
 const ChatV3 = (props: {
   showHistory: boolean;
@@ -103,36 +103,42 @@ const ChatV3 = (props: {
         content: completion!.data!.choices[0]!.message!.content!,
       });
       setCurrentConversation(newConversation);
+      setPrompt("");
       setIsLoading(false);
       setResponse(completion!.data!.choices[0]!.message!.content!);
     }
   };
 
   return (
-    <ChatV3Container>
-      <div className="responses rounded-md overflow-scroll h-80 lg:h-96">
-        {currentConversation.map((x, index) => {
-          if (x.role === "user") {
-            return (
-              <UserPromptItem
-                username={props.user?.nickname}
-                key={index}
-                variant="chat"
-              >
-                {x.content}
-              </UserPromptItem>
-            );
-          } else if (x.role === "assistant") {
-            return (
-              <BotResponseItem key={index} variant="chat">
-                {x.content}
-              </BotResponseItem>
-            );
-          }
-        })}
-      </div>
+    <section className="flex flex-col space-y-4 w-9/12 h-full justify-between">
+      <ResponsesContainer>
+        <div
+          id="responses"
+          className="px-4 bg-neutral-900 bg-opacity-60 backdrop-blur-md border border-neutral-800 rounded-md overflow-scroll max-h-max"
+        >
+          {currentConversation.map((x, index) => {
+            if (x.role === "user") {
+              return (
+                <UserPromptItem
+                  username={props.user?.nickname}
+                  key={index}
+                  variant="chat"
+                >
+                  {x.content}
+                </UserPromptItem>
+              );
+            } else if (x.role === "assistant") {
+              return (
+                <BotResponseItem key={index} variant="chat">
+                  {x.content}
+                </BotResponseItem>
+              );
+            }
+          })}
+        </div>
+      </ResponsesContainer>
       <div
-        className={`flex flex-col space-y-2 lg:space-y-4 w-9/12 fixed bottom-0 right-0 bg-neutral-900 bg-opacity-40 border-neutral-800 backdrop-blur-md p-2 lg:p-4 ${
+        className={`grow-0 flex flex-col space-y-2 lg:space-y-4 bottom-0 right-0 border rounded-md bg-neutral-900 bg-opacity-40 border-neutral-800 backdrop-blur-md p-2 lg:p-4 ${
           props.showHistory ? "border-t" : "border-t border-l rounded-tl-md"
         }`}
       >
@@ -154,13 +160,11 @@ const ChatV3 = (props: {
         <div className="flex flex-row space-x-4 justify-between items-center">
           <div className="flex flex-row justify-start items-center space-x-4">
             {!isLoading && (
-              <div className="group w-fit h-fit p-[0.1rem] rounded-md bg-gradient-to-tr from-neutral-700 to-neutral-50 via-neutral-400 from-60% flex flex-row items-center">
-                <ButtonSendPrompt
-                  onClick={() => {
-                    generate();
-                  }}
-                />
-              </div>
+              <ButtonSendPrompt
+                onClick={() => {
+                  generate();
+                }}
+              />
             )}
 
             {!isLoading && (
@@ -171,23 +175,14 @@ const ChatV3 = (props: {
                 checked={humanize}
               />
             )}
-            {isLoading && (
-              <div className="flex flex-row space-x-2 items-center px-4 py-1 w-fit lowercase rounded-md border border-neutral-900">
-                <p>response in progress</p>
-                <LoadingSmall />
-              </div>
-            )}
+            {isLoading && <ResponseLoading />}
           </div>
           <div className="flex flex-row justify-start items-center space-x-4">
             {!isLoading && <ButtonDeleteChat chatId={props.user?.sub!} />}
           </div>
         </div>
-        <p className="text-violet-400 text-xs">
-          &copy; {new Date().getFullYear()} Vidit Khandelwal. All rights
-          reserved.
-        </p>
       </div>
-    </ChatV3Container>
+    </section>
   );
 };
 

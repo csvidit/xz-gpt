@@ -3,8 +3,12 @@ import Header from "@/components/Header/Header";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0";
 import HistoryContent from "@/components/History/HistoryContent";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default function Home() {
+
+  redirect("/")
+
   return (
     <>
       <Head>

@@ -3,3 +3,5 @@ const MobileNav = () => {
     
   </nav>;
 };
+
+export default MobileNav;

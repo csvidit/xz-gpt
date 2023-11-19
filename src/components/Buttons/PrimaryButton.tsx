@@ -8,6 +8,7 @@ const PrimaryButton = (props: {
   type: string; // focus or nonfocus
   onClick: any;
   external?: boolean;
+  className?: string;
 }) => {
   const mainDivVariants = {
     hover: {},
@@ -45,7 +46,7 @@ const PrimaryButton = (props: {
         variants={mainDivVariants}
         whileHover="hover"
         initial="initial"
-        className={`flex flex-row space-x-2 items-center text-neutral-100 border-2 border-neutral-100 bg-neutral-100 bg-opacity-10 hover:bg-opacity-100 hover:text-black backdrop-blur-md hover:transform hover:scale-105 transition ease-in-out`}
+        className={`flex flex-row space-x-2 items-center text-neutral-100 border-2 border-neutral-100 bg-neutral-100 bg-opacity-10 hover:bg-opacity-100 hover:text-black backdrop-blur-md hover:transform hover:scale-105 transition ease-in-out ${props.className}}`}
       >
         <motion.button
           className="flex flex-row space-x-2 items-center w-max h-full p-2 lg:p-4 overflow-hidden"

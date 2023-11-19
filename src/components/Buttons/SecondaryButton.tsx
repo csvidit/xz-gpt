@@ -9,6 +9,7 @@ const SecondaryButton = (props: {
   external?: boolean;
   type: string; // focus or nonfocus
   onClick: any
+  className?: string;
 }) => {
   let icon;
 
@@ -56,7 +57,7 @@ const SecondaryButton = (props: {
         variants={mainDivVariants}
         whileHover="hover"
         initial="initial"
-        className={`rounded-md w-fit flex flex-row space-x-2 items-center text-white border border-white bg-white bg-opacity-10 hover:bg-opacity-100 hover:text-black backdrop-blur-md transition ease-in-out`}
+        className={`rounded w-fit flex flex-row space-x-2 items-center text-neutral-100 border border-neutral-100 bg-neutral-100 bg-opacity-10 hover:bg-opacity-100 hover:text-neutral-900 backdrop-blur-md transition ease-in-out ${props.className} }`}
       >
         <motion.button
           className="flex flex-row space-x-2 items-center w-max h-full px-2 py-1 overflow-hidden text-sm"
@@ -64,12 +65,12 @@ const SecondaryButton = (props: {
         >
           <motion.div className="flex flex-col overflow-hidden">
             <AnimatePresence mode="popLayout">
-              <motion.div layout variants={textVariants1} className="flex">
+              <motion.div variants={textVariants1} className="flex">
                 {props.children}
               </motion.div>
             </AnimatePresence>
             <AnimatePresence mode="popLayout">
-              <motion.div layout variants={textVariants2} className="flex">
+              <motion.div variants={textVariants2} className="flex">
                 {props.children}
               </motion.div>
             </AnimatePresence>

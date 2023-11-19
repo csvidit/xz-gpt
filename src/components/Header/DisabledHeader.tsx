@@ -1,17 +1,8 @@
-"use client";
-
 import Link from "next/link";
-import { useUser } from "@auth0/nextjs-auth0/client";
-import HeaderLoading from "../HeaderLoading";
-import DesktopNav from "./DesktopNav";
 import NavItem from "./NavItem";
 
-export default function Header() {
-  const { user, error, isLoading } = useUser();
-
-  return isLoading ? (
-    <HeaderLoading />
-  ) : (
+const DisabledHeader = () => {
+  return (
     <header
       key={Math.random()}
       className="rounded-md bg-neutral-900 bg-opacity-40 border border-neutral-800 z-10 flex flex-row space-x-2 justify-between items-center w-full h-full text-xl lg:text-2xl px-4 py-2 backdrop-blur-md"
@@ -24,11 +15,14 @@ export default function Header() {
           XZAYVIAN
         </Link>
       </div>
-      {user ? (
-        <DesktopNav isAuthenticated={true} />
-      ) : (
-        <DesktopNav isAuthenticated={false} />
-      )}
+      <div className="flex flex-row space-x-4 items-center">
+        <NavItem href="/about">About</NavItem>
+        <NavItem href="https://viditkhandelwal.com">
+          viditkhandelwal.com
+        </NavItem>
+      </div>
     </header>
   );
-}
+};
+
+export default DisabledHeader;

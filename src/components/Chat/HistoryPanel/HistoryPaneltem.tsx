@@ -30,13 +30,13 @@ const HistoryPanelItem = () => {
       <motion.div
         initial="initial"
         whileHover="hover"
-        className="px-5 lg:px-10 relative text-sm flex flex-row items-center bg-neutral-900 bg-opacity-10 border-b border-neutral-800 hover:border-violet-700 transition-all duration-200"
+        className="relative text-sm flex flex-row items-center border-b border-neutral-800 hover:border-violet-700 transition-all duration-200"
       >
         <Link href="/" className="w-full h-full">
           <motion.div
             initial="initial"
             whileHover="hover"
-            className="z-0 flex flex-row items-center overflow-hidden"
+            className="px-4 z-0 flex flex-row items-center overflow-hidden"
           >
             <motion.div variants={labelVariants} layout className="p-2">
               Animate Gradient in Framer

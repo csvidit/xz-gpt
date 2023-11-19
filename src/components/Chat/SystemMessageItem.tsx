@@ -11,7 +11,7 @@ const SystemMessageItem = (props: {currentMessage: string, messageChanger: Dispa
       }
 
   return (
-    <ChatItemContainer>
+    <ChatItemContainer variant="user">
       <div className="flex flex-col items-start font-medium text-emerald-800 text-lg bg-emerald-600 bg-opacity-30 p-2 rounded-l-xl select-none">
         <HiCog />
         <p className="w-32">System Message</p>
